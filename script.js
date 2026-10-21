@@ -116,8 +116,7 @@ function renderDialogPhoto() {
   const image = $(".dialog-image", dialog);
   image.src = photo.image;
   image.alt = photo.alt;
-  $(".dialog-copy small", dialog).textContent = place.name + " · " + content.ui.photoNote;
-  $(".dialog-copy h2", dialog).textContent = photo.title;
+  $(".dialog-copy small", dialog).textContent = place.name;
   $(".dialog-copy p", dialog).textContent = photo.description;
   const multiple = place.photos.length > 1;
   $(".dialog-photo-prev", dialog).hidden = !multiple;
@@ -184,9 +183,16 @@ function observeReveal(element, delay = 0, variant = "rise") {
 
 function observeProjectReveal() {
   if (!revealObserver) return;
+  const carousel = $(".project-carousel");
+  const banner = $(".project-banner", carousel);
+  const copy = $(".project-copy", carousel);
+  if (!carousel || !banner || !copy) return;
+
   const isMobile = window.matchMedia("(max-width: 520px)").matches;
-  observeReveal($(".project-banner"), 0, "image");
-  observeReveal($(".project-copy"), isMobile ? 80 : 140);
+  banner.classList.add("scroll-reveal", "scroll-reveal--image");
+  copy.classList.add("scroll-reveal");
+  copy.style.setProperty("--reveal-delay", (isMobile ? 80 : 140) + "ms");
+  revealObserver.observe(carousel);
 }
 
 function setupScrollReveal() {
@@ -195,7 +201,12 @@ function setupScrollReveal() {
   revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-visible");
+      if (entry.target.classList.contains("project-carousel")) {
+        $(".project-banner", entry.target)?.classList.add("is-visible");
+        $(".project-copy", entry.target)?.classList.add("is-visible");
+      } else {
+        entry.target.classList.add("is-visible");
+      }
       revealObserver.unobserve(entry.target);
     });
   }, { threshold: 0.08, rootMargin: "0px 0px -44px 0px" });
@@ -305,7 +316,7 @@ function loadGoogleMaps() {
 
 async function start() {
   try {
-    const response = await fetch("./content.json?v=12", { cache: "no-store" });
+    const response = await fetch("./content.json?v=16", { cache: "no-store" });
     if (!response.ok) throw new Error("Content file could not be loaded.");
     content = await response.json();
     renderPage();

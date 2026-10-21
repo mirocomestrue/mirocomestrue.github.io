@@ -9,7 +9,6 @@
     "mapLabel": "Map of photo locations",
     "mapLoading": "Loading map",
     "mapError": "Map unavailable. Check the API key settings.",
-    "photoNote": "CAPTION",
     "bio": "Bio",
     "projects": "Projects",
     "close": "Close",
@@ -52,8 +51,7 @@
       },
       "photos": [
         {
-          "title": "Painting the Taj Mahal at sunset",
-          "description": "I painted the Taj Mahal on a wall at Friends Guest House.",
+          "description": "Painting the Taj Mahal against a sunset backdrop on a wall at Friends Guest House.",
           "alt": "Painting of the Taj Mahal on a guesthouse wall at sunset",
           "image": "./assets/me_world/agra.jpg"
         }
@@ -68,16 +66,14 @@
       },
       "photos": [
         {
-          "title": "A warmer coat for a puppy",
-          "description": "We made a sweater from recycled socks to keep a cold puppy warm.",
-          "alt": "A small puppy wearing a handmade sweater from recycled socks",
-          "image": "./assets/me_world/kyrg_dog.jpg"
-        },
-        {
-          "title": "An English lesson in Karakol",
-          "description": "Teaching English and adjectives to local students.",
+          "description": "I taught English to girls interested in beauty and told them, “We’re all beautiful with or without these.”",
           "alt": "An English class with adjectives on the board",
           "image": "./assets/me_world/kyrg_class.jpg"
+        },
+        {
+          "description": "Making a sweater from recycled socks to keep a cold puppy warm.",
+          "alt": "A small puppy wearing a handmade sweater from recycled socks",
+          "image": "./assets/me_world/kyrg_dog.jpg"
         }
       ]
     },
@@ -90,25 +86,21 @@
       },
       "photos": [
         {
-          "title": "Drawing Mongolian traditions",
-          "description": "Drawing with one of the older children at Lotus.",
+          "description": "Drawing Mongolian traditions with one of the older children at Lotus.",
           "alt": "A drawing inspired by Mongolian traditions at Lotus Children's Centre",
           "image": "./assets/me_world/homestay_Ulaanbaatar.JPG"
         },
         {
-          "title": "My sisters at Lotus",
-          "description": "A moment with my sisters at Lotus Children's Centre.",
+          "description": "Spending time with my sisters at Lotus Children's Centre.",
           "alt": "Yeji with her sisters at Lotus Children’s Centre",
           "image": "./assets/me_world/lotus_sisters.JPG"
         },
         {
-          "title": "Making something sweet",
           "description": "Baking together in the Lotus kitchen.",
           "alt": "Preparing baked treats together at Lotus Children’s Centre",
           "image": "./assets/me_world/Lotus_Cafe_baking.JPG"
         },
         {
-          "title": "Treats from our baking day",
           "description": "The treats we made at Lotus Children's Centre.",
           "alt": "Baked treats from a day at the Lotus cafe",
           "image": "./assets/me_world/Lotus_Cafe_baking2.JPG"
@@ -124,38 +116,39 @@
       },
       "photos": [
         {
-          "title": "Friends at school",
+          "description": "My name written in Burmese during a visit to the school.",
+          "alt": "The name Yeji written in Burmese on a classroom board",
+          "image": "./assets/me_world/sagaing.jpg"
+        },
+        {
           "description": "Students and a friendly dog at Aung Myae Oo Monastic School.",
           "alt": "Children and a dog at Aung Myae Oo Monastic School",
           "image": "./assets/me_world/sagain.jpg"
-        },
-        {
-          "title": "Yeji in Burmese",
-          "description": "My name written in Burmese at the school.",
-          "alt": "The name Yeji written in Burmese on a classroom board",
-          "image": "./assets/me_world/sagaing.jpg"
         }
       ]
     },
     {
       "id": "osakarovka",
-      "name": "Osakarovka · Qaraghandy, Kazakhstan",
+      "name": "Local farm in Ozernoe",
       "coordinates": {
-        "lat": 50.56113,
-        "lng": 72.56709
+        "lat": 50.6667,
+        "lng": 72.5167
       },
       "photos": [
         {
-          "title": "Painting class in Osakarovka",
-          "description": "Painting with children in Osakarovka.",
-          "alt": "A painting activity with children in Osakarovka, Kazakhstan",
+          "description": "Helping renovate a local farm in Ozernoe.",
+          "alt": "Helping renovate a farm building in Ozernoe, Kazakhstan",
+          "image": "./assets/me_world/kaz.jpg"
+        },
+        {
+          "description": "Painting with children at the local farm in Ozernoe.",
+          "alt": "Painting with children at a local farm in Ozernoe, Kazakhstan",
           "image": "./assets/me_world/kaz_children.jpg"
         },
         {
-          "title": "Helping renovate a home",
-          "description": "Renovating a community home near Osakarovka.",
-          "alt": "A group renovating a home in Qaraghandy",
-          "image": "./assets/me_world/kaz.jpg"
+          "description": "We completed three paintings with the children to decorate the farm’s dining area.",
+          "alt": "Three paintings made with the children decorate the farm dining area",
+          "image": "./assets/me_world/kaz_paintings.jpg"
         }
       ]
     },
@@ -168,8 +161,7 @@
       },
       "photos": [
         {
-          "title": "restless soul in seoul",
-          "description": "just a peaceful soul in seoul🐱",
+          "description": "restless soul in seoul and just a peaceful soul in seoul🐱",
           "alt": "Miro standing on a bed and looking toward the camera",
           "image": "./assets/me_world/miro.jpeg"
         }
