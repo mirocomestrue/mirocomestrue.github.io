@@ -1,13 +1,16 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f5f2">
-  <meta name="description" content="Yeji Park — personal page">
-  <title>Yeji Park — Personal page</title>
-  <link rel="stylesheet" href="./styles.css?v=3">
-  <script defer src="./script.js?v=2"></script>
+  <meta name="theme-color" content="#f4f2f0">
+  <meta name="description" content="Yeji Park">
+  <title>Yeji Park</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=4">
+  <script defer src="./script.js?v=3"></script>
 </head>
 <body>
   <main class="site-frame" id="top">
@@ -17,22 +20,22 @@
         <div class="cover-orb orb-two"></div>
         <div class="cover-orb orb-three"></div>
         <div class="language" aria-label="Language">
-          <button class="active" data-lang="ko" aria-label="한국어">KR</button>
-          <span>/</span>
-          <button data-lang="en" aria-label="English">EN</button>
+          <button class="active" data-lang="en" aria-label="English">EN</button>
+          <span aria-hidden="true">|</span>
+          <button data-lang="ko" aria-label="한국어">KR</button>
         </div>
       </div>
-      <div class="avatar" role="img" aria-label="Profile photo placeholder">
-        <span class="avatar-hair"></span><span class="avatar-face"></span><span class="avatar-shirt"></span>
+      <div class="avatar-wrap">
+        <img class="avatar" src="./assets/profile.jpeg" alt="Yeji Park">
+        <span class="verified-badge" aria-label="Verified profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 12.3 3.5 3.4 7.5-7.4"/></svg>
+        </span>
       </div>
       <div class="profile-content">
-        <p class="eyebrow" data-i="profileLabel">PERSONAL PAGE</p>
         <h1 data-i="name">Yeji Park</h1>
-        <p class="bio" data-i="bio">사람과 일상을 연결하는 일을 합니다.<br>작은 아이디어와 좋아하는 순간을 기록해요.</p>
+        <p class="bio" data-i="bio">Creative planner in Seoul.</p>
         <div class="primary-links">
-          <a class="primary-link" href="#projects"><span class="link-symbol">↗</span><span data-i="linkWork">프로젝트 둘러보기</span><b>↗</b></a>
-          <a class="primary-link" href="mailto:hello@example.com"><span class="link-symbol">✉</span><span data-i="linkEmail">이메일 보내기</span><b>↗</b></a>
-          <a class="primary-link" href="#gallery"><span class="link-symbol">⌖</span><span data-i="linkPlaces">장소별 사진 모아보기</span><b>↗</b></a>
+          <a class="primary-link" href="mailto:hello@example.com"><span class="link-symbol">✉</span><span data-i="linkEmail">Email</span><b>↗</b></a>
         </div>
         <div class="find-me">
           <p class="eyebrow" data-i="findMe">FIND ME</p>
@@ -45,86 +48,67 @@
       </div>
     </header>
 
-    <section class="explore section-pad" aria-labelledby="explore-title">
-      <p class="eyebrow">EXPLORE</p>
-      <h2 class="sr-only" id="explore-title" data-i="exploreTitle">더 둘러보기</h2>
-      <div class="explore-grid">
-        <a class="explore-card explore-map" href="#gallery"><span class="explore-art">⌖</span><span data-i="exploreMap">장소 기록</span><b>↗</b></a>
-        <a class="explore-card explore-life" href="#life"><span class="explore-art">✳</span><span data-i="exploreLife">이력과 배움</span><b>↗</b></a>
-        <a class="explore-card explore-work" href="#projects"><span class="explore-art">✦</span><span data-i="exploreWork">프로젝트</span><b>↗</b></a>
-      </div>
+    <section class="miro-section section-pad" aria-label="Miro">
       <a class="miro-card" href="https://youtube.com/" target="_blank" rel="noreferrer">
-        <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=600&q=80" alt="고양이 미로 영상 자리" loading="lazy">
-        <span class="miro-copy"><small data-i="miroKicker">A LITTLE VIDEO</small><strong data-i="miroTitle">고양이 미로의 하루</strong><span data-i="miroDesc">미로의 느긋한 일상을 영상으로 만나요.</span></span>
+        <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=600&q=80" alt="Miro the cat" loading="lazy">
+        <span class="miro-copy"><strong data-i="miroTitle">Miro</strong><span data-i="miroDesc">A little video diary</span></span>
         <span class="play-button" aria-hidden="true">▶</span>
       </a>
     </section>
 
     <section class="content-section section-pad" id="gallery">
-      <div class="section-heading">
-        <div><p class="eyebrow">01 · PHOTO JOURNAL</p><h2 data-i="galleryTitle">장소에 남긴 순간</h2></div>
-        <p data-i="galleryIntro">지도 핀을 누르거나 장소를 골라 사진을 둘러보세요.</p>
-      </div>
+      <div class="section-heading"><h2 data-i="galleryTitle">Places</h2></div>
       <div class="map-card">
-        <div class="map-heading"><span class="map-mark">⌖</span><span data-i="mapTitle">작은 여행 지도</span><small>03 PLACES</small></div>
-        <div id="map" aria-label="Google 지도에 표시한 사진 장소">
-          <div class="map-fallback"><b>⌖</b><strong data-i="mapLoading">지도를 불러오는 중이에요</strong><small data-i="mapHint">지도의 핀을 눌러 장소를 골라보세요.</small></div>
+        <div id="map" aria-label="Google map showing photo locations">
+          <div class="map-fallback"><b>⌖</b><strong data-i="mapLoading">Loading map</strong></div>
         </div>
-        <div class="map-legend"><i></i><span data-i="mapLegend">사진 기록이 있는 장소</span></div>
       </div>
-      <div class="photo-heading"><h3 data-i="photoHeading">사진 모아보기</h3><span data-i="photoCount">03 PHOTOS</span></div>
-      <div class="place-tabs" role="group" aria-label="장소 선택">
-        <button class="selected" data-place="all" data-i="allPlaces">전체</button>
+      <div class="photo-heading"><h3 data-i="photoHeading">Photos</h3></div>
+      <div class="place-tabs" role="group" aria-label="Photo locations">
+        <button class="selected" data-place="all" data-i="allPlaces">All</button>
         <button data-place="seoul">Seoul</button><button data-place="jeju">Jeju</button><button data-place="busan">Busan</button>
       </div>
       <div class="photos">
         <button class="photo-card" data-place="seoul" data-photo="seoul">
-          <span class="photo-image"><img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=700&q=80" alt="도시의 저녁 풍경" loading="lazy"><small>SEOUL · 09:18</small></span>
-          <span class="photo-caption"><strong data-i="seoulPhoto">느린 아침 산책</strong><small>Seoul, Korea <b>↗</b></small></span>
+          <span class="photo-image"><img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=700&q=80" alt="City lights at dusk" loading="lazy"><small>SEOUL · 09:18</small></span>
+          <span class="photo-caption"><strong data-i="seoulPhoto">A slow morning walk</strong><small>Seoul, Korea <b>↗</b></small></span>
         </button>
         <button class="photo-card" data-place="jeju" data-photo="jeju">
-          <span class="photo-image"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=700&q=80" alt="바다와 산이 보이는 풍경" loading="lazy"><small>JEJU · 16:42</small></span>
-          <span class="photo-caption"><strong data-i="jejuPhoto">바람을 따라 걷기</strong><small>Jeju, Korea <b>↗</b></small></span>
+          <span class="photo-image"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=700&q=80" alt="Coastal landscape" loading="lazy"><small>JEJU · 16:42</small></span>
+          <span class="photo-caption"><strong data-i="jejuPhoto">Following the wind</strong><small>Jeju, Korea <b>↗</b></small></span>
         </button>
         <button class="photo-card" data-place="busan" data-photo="busan">
-          <span class="photo-image"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80" alt="저녁 바다 풍경" loading="lazy"><small>BUSAN · 18:05</small></span>
-          <span class="photo-caption"><strong data-i="busanPhoto">파란 저녁의 기록</strong><small>Busan, Korea <b>↗</b></small></span>
+          <span class="photo-image"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80" alt="Evening by the sea" loading="lazy"><small>BUSAN · 18:05</small></span>
+          <span class="photo-caption"><strong data-i="busanPhoto">Notes from a blue evening</strong><small>Busan, Korea <b>↗</b></small></span>
         </button>
       </div>
     </section>
 
     <section class="content-section section-pad" id="life">
-      <div class="section-heading">
-        <div><p class="eyebrow">02 · BACKGROUND</p><h2 data-i="lifeTitle">배우고 일한 시간</h2></div>
-        <p data-i="lifeIntro">함께 일하고 새로 배운 순간을 모았습니다.</p>
-      </div>
+      <div class="section-heading"><h2 data-i="lifeTitle">Experience &amp; Education</h2></div>
       <div class="resume-grid">
         <article class="resume-card">
-          <div class="card-heading"><span>↗</span><h3 data-i="work">경력</h3></div>
-          <div class="resume-entry"><time>2023 — NOW</time><div><strong data-i="job1">브랜드 스튜디오 · 기획</strong><p data-i="job1d">사람과 브랜드가 만나는 경험을 기획하고 있어요.</p></div></div>
-          <div class="resume-entry"><time>2021 — 2023</time><div><strong data-i="job2">좋은 팀 · 프로젝트 매니저</strong><p data-i="job2d">여러 분야의 팀과 협업하며 아이디어를 실행으로 옮겼습니다.</p></div></div>
+          <div class="card-heading"><span>↗</span><h3 data-i="work">Experience</h3></div>
+          <div class="resume-entry"><time>2023 — NOW</time><div><strong data-i="job1">Brand Studio · Planning</strong></div></div>
+          <div class="resume-entry"><time>2021 — 2023</time><div><strong data-i="job2">Good Team · Project Manager</strong></div></div>
         </article>
         <article class="resume-card">
-          <div class="card-heading"><span>✳</span><h3 data-i="education">학력</h3></div>
-          <div class="resume-entry"><time>2017 — 2021</time><div><strong data-i="school1">서울대학교 · 커뮤니케이션</strong><p data-i="school1d">사람과 미디어, 일상의 이야기를 공부했습니다.</p></div></div>
-          <div class="resume-entry"><time>2020</time><div><strong data-i="school2">교환학생 프로그램</strong><p data-i="school2d">새로운 문화와 관점을 경험했습니다.</p></div></div>
+          <div class="card-heading"><span>✳</span><h3 data-i="education">Education</h3></div>
+          <div class="resume-entry"><time>2017 — 2021</time><div><strong data-i="school1">Seoul National University · Communications</strong></div></div>
+          <div class="resume-entry"><time>2020</time><div><strong data-i="school2">Exchange program</strong></div></div>
         </article>
       </div>
     </section>
 
     <section class="content-section section-pad projects-section" id="projects">
-      <div class="section-heading">
-        <div><p class="eyebrow">03 · SELECTED WORK</p><h2 data-i="projectsTitle">함께 만든 프로젝트</h2></div>
-        <p data-i="projectsIntro">작은 질문에서 출발한 세 가지 작업.</p>
-      </div>
+      <div class="section-heading"><h2 data-i="projectsTitle">Projects</h2></div>
       <div class="projects-grid">
-        <article class="project-card"><div class="project-art project-one"><span>01</span><div class="mini-window"><i></i><i></i><i></i><b></b></div></div><div class="project-copy"><small>PRODUCT · 2025</small><h3 data-i="p1">마음이 편한 시작</h3><p data-i="p1d">복잡한 과정을 쉽고 친근한 디지털 경험으로 정리했습니다.</p></div></article>
-        <article class="project-card"><div class="project-art project-two"><span>02</span><div class="bubble-shape">hello! <b>✳</b></div></div><div class="project-copy"><small>COMMUNITY · 2024</small><h3 data-i="p2">동네의 새로운 연결</h3><p data-i="p2d">이웃의 관심사를 발견하고 함께할 수 있도록 도운 프로젝트입니다.</p></div></article>
-        <article class="project-card"><div class="project-art project-three"><span>03</span><div class="paper-shape">field notes<br><strong>Ideas<br>into action.</strong></div></div><div class="project-copy"><small>RESEARCH · 2024</small><h3 data-i="p3">작은 관찰의 힘</h3><p data-i="p3d">사용자 이야기를 바탕으로 다음 단계의 방향을 함께 찾았습니다.</p></div></article>
+        <article class="project-card"><div class="project-art project-one"><span>01</span><div class="mini-window"><i></i><i></i><i></i><b></b></div></div><div class="project-copy"><small>PRODUCT · 2025</small><h3 data-i="p1">A calmer first step</h3></div></article>
+        <article class="project-card"><div class="project-art project-two"><span>02</span><div class="bubble-shape">hello! <b>✳</b></div></div><div class="project-copy"><small>COMMUNITY · 2024</small><h3 data-i="p2">A new neighborhood connection</h3></div></article>
+        <article class="project-card"><div class="project-art project-three"><span>03</span><div class="paper-shape">field notes<br><strong>Ideas<br>into action.</strong></div></div><div class="project-copy"><small>RESEARCH · 2024</small><h3 data-i="p3">The power of small observations</h3></div></article>
       </div>
     </section>
 
-    <footer class="footer"><a href="#top"><span class="footer-avatar">YP</span><span><strong>Yeji Park</strong><small data-i="footer">Seoul, KR · 작은 기록을 모으는 중</small></span></a><a class="back-top" href="#top" data-i="top">↑ TOP</a></footer>
   </main>
 
   <dialog id="photoDialog" class="photo-dialog">
