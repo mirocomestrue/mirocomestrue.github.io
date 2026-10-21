@@ -44,7 +44,8 @@ function renderPage() {
 
   $("#gallery .section-heading h2").textContent = text(content.ui.galleryTitle);
   $("#map").setAttribute("aria-label", text(content.ui.mapLabel));
-  $(".map-fallback strong").textContent = text(content.ui.mapLoading);
+  const mapLoadingLabel = $(".map-fallback strong");
+  if (mapLoadingLabel) mapLoadingLabel.textContent = text(content.ui.mapLoading);
   $(".photo-heading h3").textContent = text(content.ui.photoHeading);
   renderPlaceFilters();
   renderPhotos();
