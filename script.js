@@ -104,13 +104,13 @@ function showProject(index, direction = 1) {
   ).join("");
   const subtitle = project.subtitle ? '<p class="project-subtitle">' + escapeHTML(project.subtitle) + '</p>' : '';
   const quote = project.quote ? '<blockquote class="project-quote">' + escapeHTML(project.quote) + '</blockquote>' : '';
-  const metaAlign = project.metaAlign === 'right' ? ' project-meta--right' : '';
+  const copyAlign = project.copyAlign === 'right' ? ' project-copy--right' : '';
   slide.innerHTML =
     '<article class="project-card">' +
       '<div class="project-banner project-' + (projectIndex + 1) + ' project-banner--' + escapeHTML(project.layout || "single") + '">' +
         projectImages +
       '</div>' +
-      '<div class="project-copy"><div class="project-meta' + metaAlign + '"><small>' + escapeHTML(project.category) + '</small>' + subtitle + '</div>' +
+      '<div class="project-copy' + copyAlign + '"><div class="project-meta"><small>' + escapeHTML(project.category) + '</small>' + subtitle + '</div>' +
       '<h3>' + escapeHTML(project.title) + '</h3><p>' + escapeHTML(project.description) + '</p>' + quote + '</div>' +
     '</article>';
   observeProjectReveal();
@@ -134,7 +134,23 @@ function renderDialogPhoto() {
   image.src = photo.image;
   image.alt = photo.alt;
   $(".dialog-copy small", dialog).textContent = place.name;
-  $(".dialog-copy p", dialog).textContent = photo.description;
+  const description = $(".dialog-copy p", dialog);
+  const linkPart = photo.descriptionLink;
+  const linkIndex = linkPart?.text ? photo.description.indexOf(linkPart.text) : -1;
+  if (linkIndex >= 0 && linkPart.url) {
+    const link = document.createElement("a");
+    link.href = linkPart.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = linkPart.text;
+    description.replaceChildren(
+      document.createTextNode(photo.description.slice(0, linkIndex)),
+      link,
+      document.createTextNode(photo.description.slice(linkIndex + linkPart.text.length))
+    );
+  } else {
+    description.textContent = photo.description;
+  }
   const multiple = place.photos.length > 1;
   $(".dialog-photo-prev", dialog).hidden = !multiple;
   $(".dialog-photo-next", dialog).hidden = !multiple;
@@ -393,7 +409,7 @@ function loadGoogleMaps() {
 
 async function start() {
   try {
-    const response = await fetch("./content.json?v=16", { cache: "no-store" });
+    const response = await fetch("./content.json?v=19", { cache: "no-store" });
     if (!response.ok) throw new Error("Content file could not be loaded.");
     content = await response.json();
     renderPage();

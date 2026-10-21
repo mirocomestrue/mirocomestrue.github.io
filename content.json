@@ -33,11 +33,6 @@
         "name": "LinkedIn",
         "url": "https://www.linkedin.com/in/yaeji-miya-park-872132244/",
         "icon": "in"
-      },
-      {
-        "name": "YouTube",
-        "url": "https://www.youtube.com/@mirodanyang",
-        "icon": "▶"
       }
     ]
   },
@@ -161,9 +156,13 @@
       },
       "photos": [
         {
-          "description": "restless soul in seoul and just a peaceful soul in seoul🐱",
+          "description": "Are you interested in Me(ow)? Check this out!",
           "alt": "Miro standing on a bed and looking toward the camera",
-          "image": "./assets/me_world/miro.jpeg"
+          "image": "./assets/me_world/miro.jpeg",
+          "descriptionLink": {
+            "text": "this",
+            "url": "https://www.youtube.com/@mirodanyang"
+          }
         }
       ]
     }
@@ -196,7 +195,7 @@
           "alt": "Clinic details with availability and reviews"
         }
       ],
-      "metaAlign": "right"
+      "copyAlign": "right"
     },
     {
       "category": "ANIMAL WELFARE",
@@ -212,10 +211,10 @@
       ]
     },
     {
-      "category": "NONPROFIT TOOLS",
+      "category": "NONPROFIT OPERATIONS ",
       "title": "A Chatbot for Nonprofits",
-      "subtitle": "In development · Gyeongmyodang pilot",
-      "description": "Nonprofits often run with limited staff, and many routine tasks can be automated. We’re building a chatbot around each organization’s needs. A pilot at Gyeongmyodang automates volunteer sign-ups, cancellations, and roster management.",
+      "subtitle": "In development · pilot",
+      "description": "We help nonprofits identify routine tasks to automate and make them easy to handle through a chatbot. Our Gyeongmyodang pilot streamlines volunteer sign-ups, cancellations, and roster management.",
       "layout": "portrait",
       "images": [
         {
