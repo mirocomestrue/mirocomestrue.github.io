@@ -21,17 +21,17 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .profile { position: relative; text-align: center; }
 .cover {
   width: 100vw;
-  height: 160px;
+  height: 200px;
   margin-left: calc(50% - 50vw);
   position: relative;
   overflow: hidden;
-  background: radial-gradient(ellipse at 9% 47%, #b5d5a2 0%, transparent 30%), radial-gradient(ellipse at 29% 18%, #b9dedf 0%, transparent 32%), radial-gradient(ellipse at 52% 62%, #d7e8c4 0%, transparent 35%), radial-gradient(ellipse at 77% 19%, #c2e1e2 0%, transparent 29%), radial-gradient(ellipse at 96% 60%, #c3dcae 0%, transparent 33%), linear-gradient(115deg, #edf3e8, #eaf3f2);
+  background: radial-gradient(ellipse at 9% 47%, #d0e2c6 0%, transparent 30%), radial-gradient(ellipse at 29% 18%, #d2e9e9 0%, transparent 32%), radial-gradient(ellipse at 52% 62%, #e1ecd5 0%, transparent 35%), radial-gradient(ellipse at 77% 19%, #d5eaea 0%, transparent 29%), radial-gradient(ellipse at 96% 60%, #d5e5c9 0%, transparent 33%), linear-gradient(115deg, #f3f7f0, #f1f7f6);
 }
 .cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #ffffff08 0%, #ffffff08 45%, #ffffff56 73%, #ffffff 100%); }
-.cover-orb { position: absolute; border-radius: 50%; filter: blur(52px); opacity: .48; }
-.orb-one { width: 340px; height: 170px; top: -82px; left: 3%; background: #9dc88a; }
-.orb-two { width: 330px; height: 155px; top: -63px; right: 5%; background: #9dcfd2; }
-.orb-three { width: 430px; height: 130px; bottom: -76px; left: 34%; background: #c9dda9; }
+.cover-orb { position: absolute; border-radius: 50%; filter: blur(52px); opacity: .32; }
+.orb-one { width: 340px; height: 170px; top: -82px; left: 3%; background: #b8d7a8; }
+.orb-two { width: 330px; height: 155px; top: -63px; right: 5%; background: #b9dddf; }
+.orb-three { width: 430px; height: 130px; bottom: -76px; left: 34%; background: #d1e3b8; }
 .language {
   position: absolute;
   z-index: 2;
@@ -49,7 +49,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 .language button { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
 .language button.active { color: #1d1c1a; font-weight: 700; }
-.avatar-wrap { position: absolute; z-index: 3; top: 24px; left: 50%; width: 112px; height: 112px; transform: translateX(-50%); }
+.avatar-wrap { position: absolute; z-index: 3; top: 48px; left: 50%; width: 112px; height: 112px; transform: translateX(-50%); }
 .avatar {
   display: block;
   width: 112px;
