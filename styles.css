@@ -1,8 +1,8 @@
 :root {
   --ink: #171716;
   --muted: #6e6c69;
-  --page: #f4f2f0;
-  --chip: #eae8e5;
+  --page: #ffffff;
+  --chip: #f1f3ef;
   --accent: #347cf1;
   --radius: 12px;
 }
@@ -21,17 +21,17 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .profile { position: relative; text-align: center; }
 .cover {
   width: 100vw;
-  height: 96px;
+  height: 160px;
   margin-left: calc(50% - 50vw);
   position: relative;
   overflow: hidden;
-  background: radial-gradient(ellipse at 12% 72%, #b7d3a5 0%, transparent 32%), radial-gradient(ellipse at 38% 8%, #e0edca 0%, transparent 35%), radial-gradient(ellipse at 72% 78%, #c5dcae 0%, transparent 33%), radial-gradient(ellipse at 94% 18%, #e5edcf 0%, transparent 29%), linear-gradient(115deg, #e0ead3, #edf0e1);
+  background: radial-gradient(ellipse at 9% 47%, #b5d5a2 0%, transparent 30%), radial-gradient(ellipse at 29% 18%, #b9dedf 0%, transparent 32%), radial-gradient(ellipse at 52% 62%, #d7e8c4 0%, transparent 35%), radial-gradient(ellipse at 77% 19%, #c2e1e2 0%, transparent 29%), radial-gradient(ellipse at 96% 60%, #c3dcae 0%, transparent 33%), linear-gradient(115deg, #edf3e8, #eaf3f2);
 }
-.cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #ffffff10, #f4f2f01c); }
-.cover-orb { position: absolute; border-radius: 50%; filter: blur(38px); opacity: .56; }
-.orb-one { width: 310px; height: 130px; top: -78px; left: 5%; background: #a6c995; }
-.orb-two { width: 300px; height: 120px; top: -62px; right: 7%; background: #cadba8; }
-.orb-three { width: 380px; height: 110px; bottom: -80px; left: 36%; background: #d7e7bd; }
+.cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #ffffff08 0%, #ffffff08 45%, #ffffff56 73%, #ffffff 100%); }
+.cover-orb { position: absolute; border-radius: 50%; filter: blur(52px); opacity: .48; }
+.orb-one { width: 340px; height: 170px; top: -82px; left: 3%; background: #9dc88a; }
+.orb-two { width: 330px; height: 155px; top: -63px; right: 5%; background: #9dcfd2; }
+.orb-three { width: 430px; height: 130px; bottom: -76px; left: 34%; background: #c9dda9; }
 .language {
   position: absolute;
   z-index: 2;
@@ -49,7 +49,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 .language button { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
 .language button.active { color: #1d1c1a; font-weight: 700; }
-.avatar-wrap { position: absolute; z-index: 3; top: -1px; left: 50%; width: 112px; height: 112px; transform: translateX(-50%); }
+.avatar-wrap { position: absolute; z-index: 3; top: 24px; left: 50%; width: 112px; height: 112px; transform: translateX(-50%); }
 .avatar {
   display: block;
   width: 112px;
@@ -75,7 +75,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-shadow: 0 1px 3px #17366422;
 }
 .verified-badge svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.5; }
-.profile-content { position: relative; padding: 31px 26px 25px; }
+.profile-content { position: relative; padding: 8px 26px 25px; }
 .profile-content h1 {
   margin: 0 0 10px;
   font-family: "Manrope", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
@@ -101,7 +101,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   font-weight: 500;
   transition: background .18s;
 }
-.primary-link:hover { background: #e3e1de; }
+.primary-link:hover { background: #e8ede6; }
 .email-copy { width: 100%; border: 0; font: inherit; cursor: pointer; }
 .email-address { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .copy-icon { width: 16px; height: 16px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
@@ -134,7 +134,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .photo-heading h3 { margin: 0; font-size: 14px; font-weight: 600; }
 .place-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
 .place-tabs button { padding: 7px 11px; border: 0; border-radius: 999px; background: transparent; color: #77736f; font: inherit; font-size: 10px; cursor: pointer; }
-.place-tabs button.selected { background: #e8e6e3; color: #252421; font-weight: 600; }
+.place-tabs button.selected { background: #edf2eb; color: #252421; font-weight: 600; }
 .photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .photo-card { min-width: 0; padding: 0; overflow: hidden; border: 0; border-radius: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
 .photo-card[hidden] { display: none; }
