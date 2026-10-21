@@ -34,6 +34,7 @@ function renderPage() {
   $(".social-links").innerHTML = content.profile.socials.map(social =>
     '<a href="' + escapeHTML(social.url) + '"><span class="social-mark social-mark-' + escapeHTML(social.icon) + '" aria-hidden="true">' + renderSocialIcon(social.icon) + '</span> ' + escapeHTML(social.name) + '</a>'
   ).join("");
+  animateProfileEntrance();
 
   $("#places .section-heading h2").textContent = content.ui.galleryTitle;
   $("#map").setAttribute("aria-label", content.ui.mapLabel);
@@ -52,6 +53,21 @@ function renderPage() {
   enableHorizontalSwipe($(".dialog-image"), () => moveDialogPhoto(-1), () => moveDialogPhoto(1));
   $("#photoDialog").addEventListener("click", event => {
     if (event.target === event.currentTarget) event.currentTarget.close();
+  });
+}
+
+function animateProfileEntrance() {
+  const intro = [
+    $(".avatar-wrap"),
+    $(".profile-content h1"),
+    $(".bio"),
+    $(".primary-links"),
+    $(".find-me")
+  ];
+  intro.forEach((element, index) => {
+    if (!element) return;
+    element.classList.add("profile-enter");
+    element.style.setProperty("--enter-delay", (index * 85) + "ms");
   });
 }
 
@@ -88,12 +104,13 @@ function showProject(index, direction = 1) {
   ).join("");
   const subtitle = project.subtitle ? '<p class="project-subtitle">' + escapeHTML(project.subtitle) + '</p>' : '';
   const quote = project.quote ? '<blockquote class="project-quote">' + escapeHTML(project.quote) + '</blockquote>' : '';
+  const metaAlign = project.metaAlign === 'right' ? ' project-meta--right' : '';
   slide.innerHTML =
     '<article class="project-card">' +
       '<div class="project-banner project-' + (projectIndex + 1) + ' project-banner--' + escapeHTML(project.layout || "single") + '">' +
         projectImages +
       '</div>' +
-      '<div class="project-copy"><small>' + escapeHTML(project.category) + '</small>' + subtitle +
+      '<div class="project-copy"><div class="project-meta' + metaAlign + '"><small>' + escapeHTML(project.category) + '</small>' + subtitle + '</div>' +
       '<h3>' + escapeHTML(project.title) + '</h3><p>' + escapeHTML(project.description) + '</p>' + quote + '</div>' +
     '</article>';
   observeProjectReveal();
@@ -191,8 +208,67 @@ function observeProjectReveal() {
   const isMobile = window.matchMedia("(max-width: 520px)").matches;
   banner.classList.add("scroll-reveal", "scroll-reveal--image");
   copy.classList.add("scroll-reveal");
-  copy.style.setProperty("--reveal-delay", (isMobile ? 80 : 140) + "ms");
+  copy.style.setProperty("--reveal-delay", (isMobile ? 100 : 170) + "ms");
   revealObserver.observe(carousel);
+}
+
+function setupSmoothWheelScroll() {
+  const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (motionPreference.matches) return;
+
+  let targetY = window.scrollY;
+  let frame = 0;
+
+  const cancelScroll = () => {
+    if (frame) window.cancelAnimationFrame(frame);
+    frame = 0;
+    targetY = window.scrollY;
+  };
+
+  const hasNativeScrollTarget = target => {
+    let element = target instanceof Element ? target : target?.parentElement;
+    if (!element || element.closest("#map, dialog, input, textarea, select, [contenteditable='true']")) return true;
+    for (; element && element !== document.body && element !== document.documentElement; element = element.parentElement) {
+      const overflowY = window.getComputedStyle(element).overflowY;
+      if ((overflowY === "auto" || overflowY === "scroll") && element.scrollHeight > element.clientHeight) return true;
+    }
+    return false;
+  };
+
+  const animate = () => {
+    const currentY = window.scrollY;
+    const distance = targetY - currentY;
+    if (Math.abs(distance) < 0.7) {
+      window.scrollTo({ top: targetY, behavior: "instant" });
+      frame = 0;
+      return;
+    }
+    window.scrollTo({ top: currentY + distance * 0.12, behavior: "instant" });
+    frame = window.requestAnimationFrame(animate);
+  };
+
+  window.addEventListener("wheel", event => {
+    if (motionPreference.matches || event.defaultPrevented || event.ctrlKey || event.shiftKey) return;
+    if (Math.abs(event.deltaX) > Math.abs(event.deltaY) || !event.deltaY || hasNativeScrollTarget(event.target)) return;
+
+    const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 16 :
+      event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? window.innerHeight : 1;
+    const delta = event.deltaY * unit * 0.86;
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+    event.preventDefault();
+    if (!frame) targetY = window.scrollY;
+    targetY = Math.max(0, Math.min(maxY, targetY + delta));
+    if (!frame) frame = window.requestAnimationFrame(animate);
+  }, { passive: false });
+
+  window.addEventListener("touchstart", cancelScroll, { passive: true });
+  window.addEventListener("pointerdown", cancelScroll, { passive: true });
+  window.addEventListener("keydown", event => {
+    if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) cancelScroll();
+  });
+  motionPreference.addEventListener?.("change", event => {
+    if (event.matches) cancelScroll();
+  });
 }
 
 function setupScrollReveal() {
@@ -209,11 +285,12 @@ function setupScrollReveal() {
       }
       revealObserver.unobserve(entry.target);
     });
-  }, { threshold: 0.08, rootMargin: "0px 0px -44px 0px" });
+  }, { threshold: 0.12, rootMargin: "0px 0px -56px 0px" });
 
   const isMobile = window.matchMedia("(max-width: 520px)").matches;
-  $$(".section-heading").forEach(heading => observeReveal(heading));
-  $$(".bio-entry").forEach((entry, index) => observeReveal(entry, index * (isMobile ? 65 : 100)));
+  $$(".section-heading").forEach((heading, index) => observeReveal(heading, index * 70));
+  $$(".bio-entry").forEach((entry, index) => observeReveal(entry, index * (isMobile ? 85 : 120)));
+  observeReveal($("#map"), isMobile ? 70 : 110, "surface");
   observeProjectReveal();
 }
 
@@ -320,6 +397,7 @@ async function start() {
     if (!response.ok) throw new Error("Content file could not be loaded.");
     content = await response.json();
     renderPage();
+    setupSmoothWheelScroll();
     setupScrollReveal();
     loadGoogleMaps();
   } catch (error) {

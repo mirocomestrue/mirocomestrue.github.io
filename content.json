@@ -91,7 +91,7 @@
           "image": "./assets/me_world/homestay_Ulaanbaatar.JPG"
         },
         {
-          "description": "Spending time with my sisters at Lotus Children's Centre.",
+          "description": "My sisters from Lotus Children's Centre.",
           "alt": "Yeji with her sisters at Lotus Children’s Centre",
           "image": "./assets/me_world/lotus_sisters.JPG"
         },
@@ -175,7 +175,7 @@
     },
     {
       "period": "2021 — Present",
-      "title": "Kakao · Backend Engineer, Ad Recommendations"
+      "title": "Kakao · Backend Engineer, Ad Recommendations System"
     }
   ],
   "projects": [
@@ -195,7 +195,8 @@
           "src": "./assets/projects/fertility_2.png",
           "alt": "Clinic details with availability and reviews"
         }
-      ]
+      ],
+      "metaAlign": "right"
     },
     {
       "category": "ANIMAL WELFARE",
