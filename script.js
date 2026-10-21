@@ -23,7 +23,7 @@ function renderPage() {
   $(".bio").textContent = content.profile.bio;
 
   const whatsapp = $(".whatsapp-link");
-  whatsapp.href = "https://wa.me/" + content.profile.whatsapp.replace(/\D/g, "");
+  whatsapp.href = content.profile.whatsappUrl || ("https://wa.me/" + content.profile.whatsapp.replace(/\D/g, ""));
   whatsapp.setAttribute("aria-label", "Message on WhatsApp: " + content.profile.whatsapp);
   $(".whatsapp-number", whatsapp).textContent = content.profile.whatsapp;
 
@@ -104,13 +104,12 @@ function showProject(index, direction = 1) {
   ).join("");
   const subtitle = project.subtitle ? '<p class="project-subtitle">' + escapeHTML(project.subtitle) + '</p>' : '';
   const quote = project.quote ? '<blockquote class="project-quote">' + escapeHTML(project.quote) + '</blockquote>' : '';
-  const copyAlign = project.copyAlign === 'right' ? ' project-copy--right' : '';
   slide.innerHTML =
     '<article class="project-card">' +
       '<div class="project-banner project-' + (projectIndex + 1) + ' project-banner--' + escapeHTML(project.layout || "single") + '">' +
         projectImages +
       '</div>' +
-      '<div class="project-copy' + copyAlign + '"><div class="project-meta"><small>' + escapeHTML(project.category) + '</small>' + subtitle + '</div>' +
+      '<div class="project-copy"><div class="project-meta"><small>' + escapeHTML(project.category) + '</small>' + subtitle + '</div>' +
       '<h3>' + escapeHTML(project.title) + '</h3><p>' + escapeHTML(project.description) + '</p>' + quote + '</div>' +
     '</article>';
   observeProjectReveal();
@@ -151,15 +150,21 @@ function renderDialogPhoto() {
   } else {
     description.textContent = photo.description;
   }
-  const multiple = place.photos.length > 1;
-  $(".dialog-photo-prev", dialog).hidden = !multiple;
-  $(".dialog-photo-next", dialog).hidden = !multiple;
+  const hasMultiplePhotos = content.places.reduce((total, item) => total + item.photos.length, 0) > 1;
+  $(".dialog-photo-prev", dialog).hidden = !hasMultiplePhotos;
+  $(".dialog-photo-next", dialog).hidden = !hasMultiplePhotos;
 }
 
 function moveDialogPhoto(direction) {
-  const place = content.places.find(item => item.id === dialogPlaceId);
-  if (!place || place.photos.length < 2) return;
-  dialogPhotoIndex = (dialogPhotoIndex + direction + place.photos.length) % place.photos.length;
+  const photos = content.places.flatMap(place =>
+    place.photos.map((photo, photoIndex) => ({ placeId: place.id, photoIndex }))
+  );
+  if (photos.length < 2) return;
+  const currentIndex = photos.findIndex(photo => photo.placeId === dialogPlaceId && photo.photoIndex === dialogPhotoIndex);
+  if (currentIndex < 0) return;
+  const next = photos[(currentIndex + direction + photos.length) % photos.length];
+  dialogPlaceId = next.placeId;
+  dialogPhotoIndex = next.photoIndex;
   renderDialogPhoto();
 }
 
@@ -409,7 +414,7 @@ function loadGoogleMaps() {
 
 async function start() {
   try {
-    const response = await fetch("./content.json?v=19", { cache: "no-store" });
+    const response = await fetch("./content.json?v=23", { cache: "no-store" });
     if (!response.ok) throw new Error("Content file could not be loaded.");
     content = await response.json();
     renderPage();

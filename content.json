@@ -15,7 +15,7 @@
     "previousProject": "Previous project",
     "nextProject": "Next project",
     "country": "Korea",
-    "siteTitle": "A Restless Soul in Seoul"
+    "siteTitle": "miro comes true!"
   },
   "profile": {
     "name": "Yeji Park",
@@ -34,7 +34,8 @@
         "url": "https://www.linkedin.com/in/yaeji-miya-park-872132244/",
         "icon": "in"
       }
-    ]
+    ],
+    "whatsappUrl": "https://wa.me/yaejipark"
   },
   "places": [
     {
@@ -46,7 +47,7 @@
       },
       "photos": [
         {
-          "description": "Painting the Taj Mahal against a sunset backdrop on a wall at Friends Guest House.",
+          "description": "Painting on a wall. The Taj Mahal at sunset was stunning!",
           "alt": "Painting of the Taj Mahal on a guesthouse wall at sunset",
           "image": "./assets/me_world/agra.jpg"
         }
@@ -61,12 +62,12 @@
       },
       "photos": [
         {
-          "description": "I taught English to girls interested in beauty and told them, “We’re all beautiful with or without these.”",
+          "description": "English Class. Little girls there were super interested in beauty. I told them, “We’re all beautiful with or without any of these.”",
           "alt": "An English class with adjectives on the board",
           "image": "./assets/me_world/kyrg_class.jpg"
         },
         {
-          "description": "Making a sweater from recycled socks to keep a cold puppy warm.",
+          "description": "Making a sweater from recycled socks!",
           "alt": "A small puppy wearing a handmade sweater from recycled socks",
           "image": "./assets/me_world/kyrg_dog.jpg"
         }
@@ -74,14 +75,14 @@
     },
     {
       "id": "lotus",
-      "name": "Lotus Children's Centre · Gachuurt, Mongolia",
+      "name": "Homestay · Ulaanbaatar, Mongolia",
       "coordinates": {
         "lat": 47.93831,
         "lng": 107.16322
       },
       "photos": [
         {
-          "description": "Drawing Mongolian traditions with one of the older children at Lotus.",
+          "description": "Painting Mongolian traditions with the older kid. (She had super good sense of color)",
           "alt": "A drawing inspired by Mongolian traditions at Lotus Children's Centre",
           "image": "./assets/me_world/homestay_Ulaanbaatar.JPG"
         },
@@ -94,11 +95,6 @@
           "description": "Baking together in the Lotus kitchen.",
           "alt": "Preparing baked treats together at Lotus Children’s Centre",
           "image": "./assets/me_world/Lotus_Cafe_baking.JPG"
-        },
-        {
-          "description": "The treats we made at Lotus Children's Centre.",
-          "alt": "Baked treats from a day at the Lotus cafe",
-          "image": "./assets/me_world/Lotus_Cafe_baking2.JPG"
         }
       ]
     },
@@ -111,12 +107,12 @@
       },
       "photos": [
         {
-          "description": "My name written in Burmese during a visit to the school.",
+          "description": "“Yeji” in Burmese",
           "alt": "The name Yeji written in Burmese on a classroom board",
           "image": "./assets/me_world/sagaing.jpg"
         },
         {
-          "description": "Students and a friendly dog at Aung Myae Oo Monastic School.",
+          "description": "Students at Aung Myae Oo Monastic School. I taught English to them. (How to count 1-5) They taught me a whole burmese song. They turned out to be better teachers than I am.",
           "alt": "Children and a dog at Aung Myae Oo Monastic School",
           "image": "./assets/me_world/sagain.jpg"
         }
@@ -131,17 +127,17 @@
       },
       "photos": [
         {
-          "description": "Helping renovate a local farm in Ozernoe.",
+          "description": "Helping renovation",
           "alt": "Helping renovate a farm building in Ozernoe, Kazakhstan",
           "image": "./assets/me_world/kaz.jpg"
         },
         {
-          "description": "Painting with children at the local farm in Ozernoe.",
+          "description": "Painting with children at the farm!",
           "alt": "Painting with children at a local farm in Ozernoe, Kazakhstan",
           "image": "./assets/me_world/kaz_children.jpg"
         },
         {
-          "description": "We completed three paintings with the children to decorate the farm’s dining area.",
+          "description": "We completed three paintings together to decorate the farm’s dining area.",
           "alt": "Three paintings made with the children decorate the farm dining area",
           "image": "./assets/me_world/kaz_paintings.jpg"
         }
@@ -156,7 +152,7 @@
       },
       "photos": [
         {
-          "description": "Are you interested in Me(ow)? Check this out!",
+          "description": "A restless soul and just a peaceful soul🐱. Are you interested in Me(ow)? Check this out!",
           "alt": "Miro standing on a bed and looking toward the camera",
           "image": "./assets/me_world/miro.jpeg",
           "descriptionLink": {
@@ -180,10 +176,9 @@
   "projects": [
     {
       "category": "FERTILITY CARE",
-      "title": "For Every Kind of Mother",
+      "title": "For mother of all kinds",
       "subtitle": "Fertility Care App",
-      "description": "Many fertility clinics in South Korea turn away unmarried women. We built a shared database of clinic visit records and a website to help them find clinics willing to treat them.",
-      "quote": "“Some doctors may see you, while others may not. If one turns you away, try another doctor.”",
+      "description": "Many fertility clinics in South Korea turn away woman in no partnership, sometimes even in very unpleasant way. I built a shared database of clinic visit records and a website to help them find clinics opened to them.",
       "layout": "stack",
       "images": [
         {
@@ -194,14 +189,13 @@
           "src": "./assets/projects/fertility_2.png",
           "alt": "Clinic details with availability and reviews"
         }
-      ],
-      "copyAlign": "right"
+      ]
     },
     {
       "category": "ANIMAL WELFARE",
-      "title": "Adopt, Don’t Shop",
+      "title": "Adopt, don’t shop",
       "subtitle": "Paw in Hand · Real-time Chat",
-      "description": "Paw in Hand helps more than 20,000 abandoned animals find homes each year. My team added real-time chat, shaped by feedback from staff, shelters, and adopters.",
+      "description": "Paw in Hand is a animal adoption platform in South Korea that helps more than 20,000 abandoned animals find new homes each year. My team featured real-time chat, listening from staff, shelters, and adopters.",
       "layout": "single",
       "images": [
         {
@@ -213,8 +207,8 @@
     {
       "category": "NONPROFIT OPERATIONS ",
       "title": "A Chatbot for Nonprofits",
-      "subtitle": "In development · pilot",
-      "description": "We help nonprofits identify routine tasks to automate and make them easy to handle through a chatbot. Our Gyeongmyodang pilot streamlines volunteer sign-ups, cancellations, and roster management.",
+      "subtitle": "In development",
+      "description": "Many nonprofits are short-staffed. Looking for a way to support them across the board, we chose a chatbot to automate routine tasks. Since people already use messaging apps like WhatsApp and KakaoTalk every day, chatbots offer an accessible way to help. Our pilot with Gyeongmyodang (animal center in Seoul) streamlines volunteer sign-ups, cancellations, and roster management.",
       "layout": "portrait",
       "images": [
         {
