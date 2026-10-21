@@ -31,7 +31,7 @@ function renderPage() {
   $(".email-address", emailButton).textContent = content.profile.email;
   $(".find-me .eyebrow").textContent = content.ui.findMe;
   $(".social-links").innerHTML = content.profile.socials.map(social =>
-    '<a href="' + escapeHTML(social.url) + '" target="_blank" rel="noopener noreferrer"><span class="social-mark social-mark-' + escapeHTML(social.icon) + '" aria-hidden="true">' + renderSocialIcon(social.icon) + '</span> ' + escapeHTML(social.name) + '</a>'
+    '<a href="' + escapeHTML(social.url) + '"><span class="social-mark social-mark-' + escapeHTML(social.icon) + '" aria-hidden="true">' + renderSocialIcon(social.icon) + '</span> ' + escapeHTML(social.name) + '</a>'
   ).join("");
 
   $("#places .section-heading h2").textContent = content.ui.galleryTitle;
@@ -85,13 +85,15 @@ function showProject(index, direction = 1) {
   const projectImages = (project.images || []).map(image =>
     '<img class="project-preview" src="' + escapeHTML(image.src) + '" alt="' + escapeHTML(image.alt || project.title) + '">'
   ).join("");
+  const subtitle = project.subtitle ? '<p class="project-subtitle">' + escapeHTML(project.subtitle) + '</p>' : '';
+  const quote = project.quote ? '<blockquote class="project-quote">' + escapeHTML(project.quote) + '</blockquote>' : '';
   slide.innerHTML =
     '<article class="project-card">' +
       '<div class="project-banner project-' + (projectIndex + 1) + ' project-banner--' + escapeHTML(project.layout || "single") + '">' +
         projectImages +
       '</div>' +
-      '<div class="project-copy"><small>' + escapeHTML(project.category) + '</small>' +
-      '<h3>' + escapeHTML(project.title) + '</h3><p>' + escapeHTML(project.description) + '</p></div>' +
+      '<div class="project-copy"><small>' + escapeHTML(project.category) + '</small>' + subtitle +
+      '<h3>' + escapeHTML(project.title) + '</h3><p>' + escapeHTML(project.description) + '</p>' + quote + '</div>' +
     '</article>';
 }
 
@@ -169,6 +171,24 @@ async function copyEmail() {
     button.classList.remove("copied");
     button.setAttribute("aria-label", content.ui.copyEmail);
   }, 1800);
+}
+
+function setupScrollReveal() {
+  const sections = $$(".content-section");
+  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: "0px 0px -48px 0px" });
+
+  sections.forEach(section => {
+    section.classList.add("scroll-reveal");
+    observer.observe(section);
+  });
 }
 
 function showMapError() {
@@ -267,10 +287,11 @@ function loadGoogleMaps() {
 
 async function start() {
   try {
-    const response = await fetch("./content.json?v=11", { cache: "no-store" });
+    const response = await fetch("./content.json?v=12", { cache: "no-store" });
     if (!response.ok) throw new Error("Content file could not be loaded.");
     content = await response.json();
     renderPage();
+    setupScrollReveal();
     loadGoogleMaps();
   } catch (error) {
     console.error(error);

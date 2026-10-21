@@ -171,9 +171,11 @@
   ],
   "projects": [
     {
-      "category": "PRODUCT",
-      "title": "Fertility Clinic Finder",
-      "description": "A map and search experience for finding designated fertility clinics and checking their reported availability.",
+      "category": "FERTILITY CARE",
+      "title": "For Every Kind of Mother",
+      "subtitle": "Fertility Hospital App",
+      "description": "Many fertility clinics in South Korea turn away single and unmarried women. We built a shared database of clinic visit records and a website to help women find accepting providers and seek fertility care with greater confidence.",
+      "quote": "“Some doctors will see you, while others may not. If one turns you away, I recommend asking for a different doctor.”",
       "layout": "stack",
       "images": [
         {
@@ -187,9 +189,10 @@
       ]
     },
     {
-      "category": "COMMUNITY",
-      "title": "Paw in Hand",
-      "description": "An adoption service concept bringing shelter listings, applications, appointments, and adopter conversations together.",
+      "category": "ANIMAL WELFARE",
+      "title": "Adopt, Don’t Shop",
+      "subtitle": "Paw in Hand · Real-time Chat",
+      "description": "Through Paw in Hand, more than 20,000 abandoned animals find families each year. My teammates and I added real-time chat to make adoption conversations easier, shaping the feature around the needs and challenges shared by Paw in Hand staff, shelter teams, and adopters.",
       "layout": "single",
       "images": [
         {
@@ -199,9 +202,10 @@
       ]
     },
     {
-      "category": "VOLUNTEERING",
-      "title": "Mango Dev",
-      "description": "A KakaoTalk chatbot concept for coordinating regular and one-off volunteer shifts, including sign-ups and cancellations.",
+      "category": "NONPROFIT TOOLS",
+      "title": "A Chatbot for Nonprofits",
+      "subtitle": "In development · Gyeongmyodang pilot",
+      "description": "Nonprofits often work with limited staff, even though many day-to-day tasks can be automated. We’re exploring a solution shaped by each organization’s needs and challenges. A pilot with Korea-based Gyeongmyodang is streamlining volunteer sign-ups, cancellations, and roster management that were previously handled by hand.",
       "layout": "portrait",
       "images": [
         {
