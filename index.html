@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=8">
-  <script defer src="./script.js?v=8"></script>
+  <link rel="stylesheet" href="./styles.css?v=11">
+  <script defer src="./script.js?v=11"></script>
 </head>
 <body>
   <main class="site-frame" id="top">
@@ -46,6 +46,11 @@
       </div>
     </header>
 
+    <section class="content-section section-pad" id="bio">
+      <div class="section-heading"><h2></h2></div>
+      <div class="bio-entries"></div>
+    </section>
+
     <section class="content-section section-pad" id="places">
       <div class="section-heading"><h2></h2></div>
       <div id="map" aria-label="">
@@ -53,21 +58,15 @@
       </div>
     </section>
 
-    <section class="content-section section-pad" id="bio">
-      <div class="section-heading"><h2></h2></div>
-      <div class="bio-entries"></div>
-    </section>
-
     <section class="content-section section-pad projects-section" id="projects">
-      <div class="section-heading project-heading">
-        <h2></h2>
+      <div class="section-heading project-heading"><h2></h2></div>
+      <div class="project-carousel">
+        <div class="project-slide" aria-live="polite"></div>
         <div class="project-controls">
           <button class="carousel-arrow project-prev" type="button" aria-label="Previous project">‹</button>
-          <span class="project-count" aria-live="polite"></span>
           <button class="carousel-arrow project-next" type="button" aria-label="Next project">›</button>
         </div>
       </div>
-      <div class="project-slide" aria-live="polite"></div>
     </section>
   </main>
 

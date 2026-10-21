@@ -24,14 +24,14 @@ function renderPage() {
   const whatsapp = $(".whatsapp-link");
   whatsapp.href = "https://wa.me/" + content.profile.whatsapp.replace(/\D/g, "");
   whatsapp.setAttribute("aria-label", "Message on WhatsApp: " + content.profile.whatsapp);
-  $(".whatsapp-number", whatsapp).textContent = "WhatsApp · " + content.profile.whatsapp;
+  $(".whatsapp-number", whatsapp).textContent = content.profile.whatsapp;
 
   const emailButton = $(".email-copy");
   emailButton.setAttribute("aria-label", content.ui.copyEmail);
   $(".email-address", emailButton).textContent = content.profile.email;
   $(".find-me .eyebrow").textContent = content.ui.findMe;
   $(".social-links").innerHTML = content.profile.socials.map(social =>
-    '<a href="' + escapeHTML(social.url) + '" target="_blank" rel="noopener noreferrer"><span>' + escapeHTML(social.icon) + '</span> ' + escapeHTML(social.name) + '</a>'
+    '<a href="' + escapeHTML(social.url) + '" target="_blank" rel="noopener noreferrer"><span class="social-mark social-mark-' + escapeHTML(social.icon) + '" aria-hidden="true">' + renderSocialIcon(social.icon) + '</span> ' + escapeHTML(social.name) + '</a>'
   ).join("");
 
   $("#places .section-heading h2").textContent = content.ui.galleryTitle;
@@ -48,9 +48,17 @@ function renderPage() {
   $(".dialog-close").addEventListener("click", () => $("#photoDialog").close());
   $(".dialog-photo-prev").addEventListener("click", () => moveDialogPhoto(-1));
   $(".dialog-photo-next").addEventListener("click", () => moveDialogPhoto(1));
+  enableHorizontalSwipe($(".dialog-image"), () => moveDialogPhoto(-1), () => moveDialogPhoto(1));
   $("#photoDialog").addEventListener("click", event => {
     if (event.target === event.currentTarget) event.currentTarget.close();
   });
+}
+
+function renderSocialIcon(icon) {
+  if (icon === "instagram") {
+    return '<svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/></svg>';
+  }
+  return escapeHTML(icon);
 }
 
 function renderBio() {
@@ -63,23 +71,26 @@ function renderProjects() {
   $("#projects .section-heading h2").textContent = content.ui.projects;
   $(".project-prev").setAttribute("aria-label", content.ui.previousProject);
   $(".project-next").setAttribute("aria-label", content.ui.nextProject);
-  $(".project-prev").addEventListener("click", () => showProject(projectIndex - 1));
-  $(".project-next").addEventListener("click", () => showProject(projectIndex + 1));
-  showProject(0);
+  $(".project-prev").addEventListener("click", () => showProject(projectIndex - 1, -1));
+  $(".project-next").addEventListener("click", () => showProject(projectIndex + 1, 1));
+  enableHorizontalSwipe($(".project-carousel"), () => showProject(projectIndex - 1, -1), () => showProject(projectIndex + 1, 1));
+  showProject(0, 0);
 }
 
-function showProject(index) {
+function showProject(index, direction = 1) {
   projectIndex = (index + content.projects.length) % content.projects.length;
   const project = content.projects[projectIndex];
-  const number = String(projectIndex + 1).padStart(2, "0");
-  $(".project-count").textContent = number + " / " + String(content.projects.length).padStart(2, "0");
-  $(".project-slide").innerHTML =
+  const slide = $(".project-slide");
+  slide.dataset.direction = direction > 0 ? "next" : direction < 0 ? "previous" : "";
+  const projectImages = (project.images || []).map(image =>
+    '<img class="project-preview" src="' + escapeHTML(image.src) + '" alt="' + escapeHTML(image.alt || project.title) + '">'
+  ).join("");
+  slide.innerHTML =
     '<article class="project-card">' +
-      '<div class="project-banner project-' + (projectIndex + 1) + '" data-art="' + escapeHTML(project.art) + '" aria-hidden="true">' +
-        '<span class="project-number">' + number + '</span>' +
-        '<div class="project-artwork"><i></i><i></i><i></i></div>' +
+      '<div class="project-banner project-' + (projectIndex + 1) + ' project-banner--' + escapeHTML(project.layout || "single") + '">' +
+        projectImages +
       '</div>' +
-      '<div class="project-copy"><small>' + escapeHTML(project.category) + ' · ' + escapeHTML(project.year) + '</small>' +
+      '<div class="project-copy"><small>' + escapeHTML(project.category) + '</small>' +
       '<h3>' + escapeHTML(project.title) + '</h3><p>' + escapeHTML(project.description) + '</p></div>' +
     '</article>';
 }
@@ -114,6 +125,24 @@ function moveDialogPhoto(direction) {
   if (!place || place.photos.length < 2) return;
   dialogPhotoIndex = (dialogPhotoIndex + direction + place.photos.length) % place.photos.length;
   renderDialogPhoto();
+}
+
+function enableHorizontalSwipe(element, onPrevious, onNext) {
+  let startX = 0;
+  let startY = 0;
+  element.addEventListener("touchstart", event => {
+    if (event.touches.length !== 1) return;
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+  }, { passive: true });
+  element.addEventListener("touchend", event => {
+    if (!event.changedTouches.length) return;
+    const deltaX = event.changedTouches[0].clientX - startX;
+    const deltaY = event.changedTouches[0].clientY - startY;
+    if (Math.abs(deltaX) < 45 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+    if (deltaX < 0) onNext();
+    else onPrevious();
+  }, { passive: true });
 }
 
 async function copyEmail() {
@@ -216,6 +245,14 @@ window.initPersonalMap = function () {
   }
 
   content.places.forEach(place => new PhotoPreviewOverlay(place));
+  if (content.places.length > 1) {
+    const bounds = new google.maps.LatLngBounds();
+    content.places.forEach(place => bounds.extend(place.coordinates));
+    map.fitBounds(bounds, 48);
+  } else if (content.places.length === 1) {
+    map.setCenter(content.places[0].coordinates);
+    map.setZoom(10);
+  }
 };
 
 function loadGoogleMaps() {
@@ -230,7 +267,7 @@ function loadGoogleMaps() {
 
 async function start() {
   try {
-    const response = await fetch("./content.json?v=8", { cache: "no-store" });
+    const response = await fetch("./content.json?v=11", { cache: "no-store" });
     if (!response.ok) throw new Error("Content file could not be loaded.");
     content = await response.json();
     renderPage();

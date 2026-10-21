@@ -5,7 +5,7 @@
     "copyEmail": "Copy email address",
     "copied": "Copied",
     "findMe": "FIND ME",
-    "galleryTitle": "Places",
+    "galleryTitle": "Me & the World",
     "mapLabel": "Map showing photo locations",
     "mapLoading": "Loading map",
     "mapError": "The map couldn't load. Check the API key settings.",
@@ -26,70 +26,135 @@
     "socials": [
       {
         "name": "Instagram",
-        "url": "https://instagram.com/",
-        "icon": "◎"
+        "url": "https://www.instagram.com/mirocomestrue/",
+        "icon": "instagram"
       },
       {
         "name": "LinkedIn",
-        "url": "https://linkedin.com/",
+        "url": "https://www.linkedin.com/in/yaeji-miya-park-872132244/",
         "icon": "in"
       },
       {
         "name": "YouTube",
-        "url": "https://youtube.com/",
+        "url": "https://www.youtube.com/@mirodanyang",
         "icon": "▶"
       }
     ]
   },
   "places": [
     {
-      "id": "seoul",
-      "name": "Seoul",
+      "id": "agra",
+      "name": "Friends Guest House & Hostel · Agra, India",
       "coordinates": {
-        "lat": 37.5665,
-        "lng": 126.978
+        "lat": 27.1635847,
+        "lng": 78.0535685
       },
       "photos": [
         {
-          "date": "09:18",
-          "title": "A slow morning walk",
-          "description": "I took a slow walk through the neighborhood as little shops opened for the day.",
-          "alt": "City lights at dusk",
-          "image": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=85"
+          "title": "The Taj Mahal at sunset",
+          "description": "As the sun set in Agra, I painted the Taj Mahal on a wall at Friends Guest House.",
+          "alt": "Painting of the Taj Mahal on a guesthouse wall at sunset",
+          "image": "./assets/me_world/agra.jpg"
         }
       ]
     },
     {
-      "id": "jeju",
-      "name": "Jeju",
+      "id": "karakol",
+      "name": "Karakol Coffee · Karakol, Kyrgyzstan",
       "coordinates": {
-        "lat": 33.4996,
-        "lng": 126.5312
+        "lat": 42.4900021,
+        "lng": 78.3915327
       },
       "photos": [
         {
-          "date": "16:42",
-          "title": "Following the wind",
-          "description": "I paused to watch the sea change color with every gust of wind.",
-          "alt": "Coastal landscape",
-          "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=85"
+          "title": "A warmer coat for a puppy",
+          "description": "We turned recycled socks into a little sweater to help a cold puppy stay warm.",
+          "alt": "A small puppy wearing a handmade sweater from recycled socks",
+          "image": "./assets/me_world/kyrg_dog.jpg"
+        },
+        {
+          "title": "An English lesson in Karakol",
+          "description": "Sharing an English lesson with local students, with a little practice on adjectives.",
+          "alt": "An English class with an adjectives lesson written on the board",
+          "image": "./assets/me_world/kyrg_class.jpg"
         }
       ]
     },
     {
-      "id": "busan",
-      "name": "Busan",
+      "id": "lotus",
+      "name": "Lotus Children's Centre · Gachuurt, Mongolia",
       "coordinates": {
-        "lat": 35.1796,
-        "lng": 129.0756
+        "lat": 47.93831,
+        "lng": 107.16322
       },
       "photos": [
         {
-          "date": "18:05",
-          "title": "Notes from a blue evening",
-          "description": "I remember the blue sea lingering long after the sun had set.",
-          "alt": "Evening by the sea",
-          "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85"
+          "title": "A picture of Mongolian traditions",
+          "description": "Drawing together with one of the older children, inspired by traditional Mongolian culture.",
+          "alt": "A drawing inspired by Mongolian culture made with a child at Lotus",
+          "image": "./assets/me_world/homestay_Ulaanbaatar.JPG"
+        },
+        {
+          "title": "My sisters at Lotus",
+          "description": "A favorite moment with my sisters at Lotus Children’s Centre.",
+          "alt": "Yeji with her sisters at Lotus Children’s Centre",
+          "image": "./assets/me_world/lotus_sisters.JPG"
+        },
+        {
+          "title": "Making something sweet",
+          "description": "Rolling and preparing treats together in the Lotus kitchen.",
+          "alt": "Preparing baked treats together at Lotus Children’s Centre",
+          "image": "./assets/me_world/Lotus_Cafe_baking.JPG"
+        },
+        {
+          "title": "Treats from our baking day",
+          "description": "The finished treats from a baking session at Lotus Children’s Centre.",
+          "alt": "Baked treats displayed at the Lotus cafe",
+          "image": "./assets/me_world/Lotus_Cafe_baking2.JPG"
+        }
+      ]
+    },
+    {
+      "id": "sagaing",
+      "name": "Aung Myae Oo Monastic School · Sagaing, Myanmar",
+      "coordinates": {
+        "lat": 21.90568,
+        "lng": 95.9866
+      },
+      "photos": [
+        {
+          "title": "Friends at school",
+          "description": "A quiet moment with the boys and a friendly dog at Aung Myae Oo Monastic School.",
+          "alt": "Children and a dog at Aung Myae Oo Monastic School",
+          "image": "./assets/me_world/sagain.jpg"
+        },
+        {
+          "title": "Yeji in Burmese",
+          "description": "My name written in Burmese during a visit to the school.",
+          "alt": "The name Yeji written in Burmese on a classroom board",
+          "image": "./assets/me_world/sagaing.jpg"
+        }
+      ]
+    },
+    {
+      "id": "osakarovka",
+      "name": "Osakarovka · Qaraghandy, Kazakhstan",
+      "coordinates": {
+        "lat": 50.56113,
+        "lng": 72.56709
+      },
+      "photos": [
+        {
+          "title": "Painting class in Osakarovka",
+          "description": "Painting with children in Osakarovka, Qaraghandy.",
+          "alt": "A painting activity with children in Osakarovka, Kazakhstan",
+          "image": "./assets/me_world/kaz_children.jpg"
+        },
+        {
+          "title": "Working together on a home",
+          "description": "A moment from a community home renovation near Osakarovka.",
+          "alt": "A group working together on a home renovation in Qaraghandy",
+          "image": "./assets/me_world/kaz.jpg"
         }
       ]
     }
@@ -107,24 +172,43 @@
   "projects": [
     {
       "category": "PRODUCT",
-      "year": "2025",
-      "title": "A calmer first step",
-      "description": "A small product idea designed to make getting started feel easier.",
-      "art": "window"
+      "title": "Fertility Clinic Finder",
+      "description": "A map and search experience for finding designated fertility clinics and checking their reported availability.",
+      "layout": "stack",
+      "images": [
+        {
+          "src": "./assets/projects/fertility_hospital_app.png",
+          "alt": "Fertility clinic finder showing search results and a map"
+        },
+        {
+          "src": "./assets/projects/fertility_2.png",
+          "alt": "Clinic detail screen with availability information and reviews"
+        }
+      ]
     },
     {
       "category": "COMMUNITY",
-      "year": "2024",
-      "title": "A new neighborhood connection",
-      "description": "A community concept for helping people feel at home in a new place.",
-      "art": "bubble"
+      "title": "Paw in Hand",
+      "description": "An adoption service concept bringing shelter listings, applications, appointments, and adopter conversations together.",
+      "layout": "single",
+      "images": [
+        {
+          "src": "./assets/projects/paw_in_hand.png",
+          "alt": "Paw in Hand animal adoption management dashboard"
+        }
+      ]
     },
     {
-      "category": "RESEARCH",
-      "year": "2024",
-      "title": "The power of small observations",
-      "description": "A short research project about the details that shape everyday life.",
-      "art": "paper"
+      "category": "VOLUNTEERING",
+      "title": "Mango Dev",
+      "description": "A KakaoTalk chatbot concept for coordinating regular and one-off volunteer shifts, including sign-ups and cancellations.",
+      "layout": "portrait",
+      "images": [
+        {
+          "src": "./assets/projects/mango_dev.PNG",
+          "alt": "Mango Dev KakaoTalk volunteer shift sign-up conversation"
+        }
+      ]
     }
   ]
 }
