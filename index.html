@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4f2f0">
-  <meta name="description" content="Yeji Park">
-  <title>Yeji Park</title>
+  <meta name="description" content="">
+  <title></title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=4">
-  <script defer src="./script.js?v=4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=5">
+  <script defer src="./script.js?v=5"></script>
 </head>
 <body>
   <main class="site-frame" id="top">
@@ -26,93 +26,70 @@
         </div>
       </div>
       <div class="avatar-wrap">
-        <img class="avatar" src="./assets/profile.jpeg" alt="Yeji Park">
-        <span class="verified-badge" aria-label="Verified profile">
+        <img class="avatar" src="" alt="">
+        <span class="verified-badge" aria-label="">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 12.3 3.5 3.4 7.5-7.4"/></svg>
         </span>
       </div>
       <div class="profile-content">
-        <h1 data-i="name">Yeji Park</h1>
-        <p class="bio" data-i="bio">Creative planner in Seoul.</p>
+        <h1></h1>
+        <p class="bio"></p>
         <div class="primary-links">
-          <a class="primary-link" href="mailto:hello@example.com"><span class="link-symbol">✉</span><span data-i="linkEmail">Email</span><b>↗</b></a>
+          <button class="primary-link email-copy" type="button">
+            <span class="email-address"></span>
+            <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
+            <span class="copy-feedback" aria-live="polite"></span>
+          </button>
         </div>
         <div class="find-me">
-          <p class="eyebrow" data-i="findMe">FIND ME</p>
-          <div class="social-links">
-            <a href="https://instagram.com/" target="_blank" rel="noreferrer"><span>◎</span> Instagram</a>
-            <a href="https://linkedin.com/" target="_blank" rel="noreferrer"><span>in</span> LinkedIn</a>
-            <a href="https://youtube.com/" target="_blank" rel="noreferrer"><span>▶</span> YouTube</a>
-          </div>
+          <p class="eyebrow"></p>
+          <div class="social-links"></div>
         </div>
       </div>
     </header>
 
-    <section class="miro-section section-pad" aria-label="Miro">
-      <a class="miro-card" href="https://youtube.com/" target="_blank" rel="noreferrer">
-        <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=600&q=80" alt="Miro the cat" loading="lazy">
-        <span class="miro-copy"><strong data-i="miroTitle">Miro</strong><span data-i="miroDesc">A little video diary</span></span>
+    <section class="miro-section section-pad" aria-labelledby="cat-name">
+      <a class="miro-card" target="_blank" rel="noreferrer">
+        <img src="" alt="" loading="lazy">
+        <span class="miro-copy"><strong id="cat-name"></strong><span></span></span>
         <span class="play-button" aria-hidden="true">▶</span>
       </a>
     </section>
 
     <section class="content-section section-pad" id="gallery">
-      <div class="section-heading"><h2 data-i="galleryTitle">Places</h2></div>
+      <div class="section-heading"><h2></h2></div>
       <div class="map-card">
-        <div id="map" aria-label="Google map showing photo locations">
-          <div class="map-fallback"><b>⌖</b><strong data-i="mapLoading">Loading map</strong></div>
+        <div id="map" aria-label="">
+          <div class="map-fallback"><b>⌖</b><strong></strong></div>
         </div>
       </div>
-      <div class="photo-heading"><h3 data-i="photoHeading">Photos</h3></div>
-      <div class="place-tabs" role="group" aria-label="Photo locations">
-        <button class="selected" data-place="all" data-i="allPlaces">All</button>
-        <button data-place="seoul">Seoul</button><button data-place="jeju">Jeju</button><button data-place="busan">Busan</button>
-      </div>
-      <div class="photos">
-        <button class="photo-card" data-place="seoul" data-photo="seoul">
-          <span class="photo-image"><img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=700&q=80" alt="City lights at dusk" loading="lazy"><small>SEOUL · 09:18</small></span>
-          <span class="photo-caption"><strong data-i="seoulPhoto">A slow morning walk</strong><small>Seoul, Korea <b>↗</b></small></span>
-        </button>
-        <button class="photo-card" data-place="jeju" data-photo="jeju">
-          <span class="photo-image"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=700&q=80" alt="Coastal landscape" loading="lazy"><small>JEJU · 16:42</small></span>
-          <span class="photo-caption"><strong data-i="jejuPhoto">Following the wind</strong><small>Jeju, Korea <b>↗</b></small></span>
-        </button>
-        <button class="photo-card" data-place="busan" data-photo="busan">
-          <span class="photo-image"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80" alt="Evening by the sea" loading="lazy"><small>BUSAN · 18:05</small></span>
-          <span class="photo-caption"><strong data-i="busanPhoto">Notes from a blue evening</strong><small>Busan, Korea <b>↗</b></small></span>
-        </button>
-      </div>
+      <div class="photo-heading"><h3></h3></div>
+      <div class="place-tabs" role="group"></div>
+      <div class="photos"></div>
     </section>
 
     <section class="content-section section-pad" id="life">
-      <div class="section-heading"><h2 data-i="lifeTitle">Experience &amp; Education</h2></div>
+      <div class="section-heading"><h2></h2></div>
       <div class="resume-grid">
-        <article class="resume-card">
-          <div class="card-heading"><span>↗</span><h3 data-i="work">Experience</h3></div>
-          <div class="resume-entry"><time>2023 — NOW</time><div><strong data-i="job1">Brand Studio · Planning</strong></div></div>
-          <div class="resume-entry"><time>2021 — 2023</time><div><strong data-i="job2">Good Team · Project Manager</strong></div></div>
+        <article class="resume-card experience-card">
+          <div class="card-heading"><span>↗</span><h3></h3></div>
+          <div class="resume-entries"></div>
         </article>
-        <article class="resume-card">
-          <div class="card-heading"><span>✳</span><h3 data-i="education">Education</h3></div>
-          <div class="resume-entry"><time>2017 — 2021</time><div><strong data-i="school1">Seoul National University · Communications</strong></div></div>
-          <div class="resume-entry"><time>2020</time><div><strong data-i="school2">Exchange program</strong></div></div>
+        <article class="resume-card education-card">
+          <div class="card-heading"><span>✳</span><h3></h3></div>
+          <div class="resume-entries"></div>
         </article>
       </div>
     </section>
 
     <section class="content-section section-pad projects-section" id="projects">
-      <div class="section-heading"><h2 data-i="projectsTitle">Projects</h2></div>
-      <div class="projects-grid">
-        <article class="project-card"><div class="project-art project-one"><span>01</span><div class="mini-window"><i></i><i></i><i></i><b></b></div></div><div class="project-copy"><small>PRODUCT · 2025</small><h3 data-i="p1">A calmer first step</h3></div></article>
-        <article class="project-card"><div class="project-art project-two"><span>02</span><div class="bubble-shape">hello! <b>✳</b></div></div><div class="project-copy"><small>COMMUNITY · 2024</small><h3 data-i="p2">A new neighborhood connection</h3></div></article>
-        <article class="project-card"><div class="project-art project-three"><span>03</span><div class="paper-shape">field notes<br><strong>Ideas<br>into action.</strong></div></div><div class="project-copy"><small>RESEARCH · 2024</small><h3 data-i="p3">The power of small observations</h3></div></article>
-      </div>
+      <div class="section-heading"><h2></h2></div>
+      <div class="projects-grid"></div>
     </section>
-
   </main>
 
   <dialog id="photoDialog" class="photo-dialog">
-    <button class="dialog-close" type="button" aria-label="Close">×</button>
+    <button class="dialog-close" type="button"></button>
     <img class="dialog-image" src="" alt="">
     <div class="dialog-copy"><small></small><h2></h2><p></p></div>
   </dialog>

@@ -1,22 +1,242 @@
 const GOOGLE_MAPS_API_KEY = "AIzaSyD9VuXNbVvifzE7MCd-x7GIM1OWtskXT8g";
-const places = [
-  {id:"seoul", name:"Seoul", coords:{lat:37.5665,lng:126.978}, title:{ko:"느린 아침 산책",en:"A slow morning walk"}, desc:{ko:"작은 가게가 문을 열던 시간, 천천히 동네를 걸으며 아침의 풍경을 담았습니다.",en:"I took a slow walk through the neighborhood as little shops opened for the day."}, image:"https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=85"},
-  {id:"jeju", name:"Jeju", coords:{lat:33.4996,lng:126.5312}, title:{ko:"바람을 따라 걷기",en:"Following the wind"}, desc:{ko:"바람이 불 때마다 달라지는 바다의 색을 바라보며 잠시 쉬어 갔어요.",en:"I paused to watch the sea change color with every gust of wind."}, image:"https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=85"},
-  {id:"busan", name:"Busan", coords:{lat:35.1796,lng:129.0756}, title:{ko:"파란 저녁의 기록",en:"Notes from a blue evening"}, desc:{ko:"해가 진 뒤에도 한동안 파랗게 남아 있던 바다를 기억합니다.",en:"I remember the blue sea lingering long after the sun had set."}, image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85"}
-];
-const translations = {
-  en:{name:"Yeji Park",bio:"Creative planner in Seoul.",linkEmail:"Email",findMe:"FIND ME",miroTitle:"Miro",miroDesc:"Cat videos",galleryTitle:"Places",mapLoading:"Loading map",photoHeading:"Photos",allPlaces:"All",seoulPhoto:"A slow morning walk",jejuPhoto:"Following the wind",busanPhoto:"Notes from a blue evening",lifeTitle:"Experience & Education",work:"Experience",education:"Education",job1:"Brand Studio · Planning",job2:"Good Team · Project Manager",school1:"Seoul National University · Communications",school2:"Exchange program",projectsTitle:"Projects",p1:"A calmer first step",p2:"A new neighborhood connection",p3:"The power of small observations"},
-  ko:{name:"Yeji Park",bio:"서울에서 디지털 경험을 기획합니다.",linkEmail:"이메일",findMe:"FIND ME",miroTitle:"미로",miroDesc:"미로의 유튜브 영상",galleryTitle:"장소",mapLoading:"지도를 불러오는 중",photoHeading:"사진",allPlaces:"전체",seoulPhoto:"느린 아침 산책",jejuPhoto:"바람을 따라 걷기",busanPhoto:"파란 저녁의 기록",lifeTitle:"경력과 학력",work:"경력",education:"학력",job1:"브랜드 스튜디오 · 기획",job2:"좋은 팀 · 프로젝트 매니저",school1:"서울대학교 · 커뮤니케이션",school2:"교환학생 프로그램",projectsTitle:"프로젝트",p1:"마음이 편한 시작",p2:"동네의 새로운 연결",p3:"작은 관찰의 힘"}
+const ASIA_OVERVIEW = { center: { lat: 32, lng: 102 }, zoom: 2.5 };
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+const escapeHTML = (value = "") => String(value).replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+let content;
+let language = "en";
+let selectedPlace = "all";
+let map;
+let infoWindow;
+
+function text(value) {
+  return typeof value === "string" ? value : (value?.[language] ?? value?.en ?? "");
+}
+
+function renderPage() {
+  document.documentElement.lang = language;
+  document.title = text(content.profile.name);
+  $("meta[name='description']").content = text(content.ui.siteDescription);
+
+  const profileImage = $(".avatar");
+  profileImage.src = content.profile.photo;
+  profileImage.alt = text(content.profile.name);
+  $(".verified-badge").setAttribute("aria-label", text(content.ui.verifiedLabel));
+  $(".language").setAttribute("aria-label", text(content.ui.languageSelection));
+  $(".profile-content h1").textContent = text(content.profile.name);
+  $(".bio").textContent = text(content.profile.bio);
+  const emailButton = $(".email-copy");
+  emailButton.setAttribute("aria-label", text(content.ui.copyEmail));
+  $(".email-address", emailButton).textContent = content.profile.email;
+  $(".find-me .eyebrow").textContent = text(content.ui.findMe);
+  $(".social-links").innerHTML = content.profile.socials.map(social => `
+    <a href="${escapeHTML(social.url)}" target="_blank" rel="noreferrer"><span>${escapeHTML(social.icon)}</span> ${escapeHTML(social.name)}</a>
+  `).join("");
+
+  const cat = content.cat;
+  const catCard = $(".miro-card");
+  catCard.href = cat.videoUrl;
+  catCard.setAttribute("aria-label", `${text(cat.name)} · ${text(cat.description)}`);
+  $(".miro-card img").src = cat.photo;
+  $(".miro-card img").alt = text(cat.name);
+  $("#cat-name").textContent = text(cat.name);
+  $(".miro-copy > span").textContent = text(cat.description);
+
+  $("#gallery .section-heading h2").textContent = text(content.ui.galleryTitle);
+  $("#map").setAttribute("aria-label", text(content.ui.mapLabel));
+  $(".map-fallback strong").textContent = text(content.ui.mapLoading);
+  $(".photo-heading h3").textContent = text(content.ui.photoHeading);
+  renderPlaceFilters();
+  renderPhotos();
+
+  $("#life .section-heading h2").textContent = text(content.ui.experienceEducation);
+  renderResume(".experience-card", content.ui.experience, content.experience);
+  renderResume(".education-card", content.ui.education, content.education);
+  $(".projects-section .section-heading h2").textContent = text(content.ui.projects);
+  renderProjects();
+
+  $$("[data-lang]").forEach(button => button.classList.toggle("active", button.dataset.lang === language));
+  $(".dialog-close").textContent = "×";
+  $(".dialog-close").setAttribute("aria-label", text(content.ui.close));
+  if (map) updateMapLanguage();
+}
+
+function renderPlaceFilters() {
+  const filters = [{ id: "all", name: content.ui.allPlaces }, ...content.places.map(place => ({ id: place.id, name: place.name }))];
+  $(".place-tabs").innerHTML = filters.map(filter => `
+    <button type="button" data-place="${escapeHTML(filter.id)}" class="${filter.id === selectedPlace ? "selected" : ""}">${escapeHTML(text(filter.name))}</button>
+  `).join("");
+  $$(".place-tabs button").forEach(button => button.addEventListener("click", () => selectPlace(button.dataset.place)));
+}
+
+function renderPhotos() {
+  const cards = content.places.flatMap(place => place.photos.map((photo, index) => ({ place, photo, index })));
+  $(".photos").innerHTML = cards.map(({ place, photo, index }) => `
+    <button type="button" class="photo-card" data-place="${escapeHTML(place.id)}" data-photo-index="${index}">
+      <span class="photo-image"><img src="${escapeHTML(photo.image)}" alt="${escapeHTML(text(photo.alt))}" loading="lazy"><small>${escapeHTML(text(place.name).toUpperCase())} · ${escapeHTML(photo.date)}</small></span>
+      <span class="photo-caption"><strong>${escapeHTML(text(photo.title))}</strong><small>${escapeHTML(text(place.name))}, ${escapeHTML(text(content.ui.country))}<b>↗</b></small></span>
+    </button>
+  `).join("");
+  $$(".photo-card").forEach(card => {
+    card.hidden = selectedPlace !== "all" && card.dataset.place !== selectedPlace;
+    card.addEventListener("click", () => openPhoto(card.dataset.place, Number(card.dataset.photoIndex)));
+  });
+}
+
+function renderResume(selector, heading, entries) {
+  const card = $(selector);
+  $(".card-heading h3", card).textContent = text(heading);
+  $(".resume-entries", card).innerHTML = entries.map(entry => `
+    <div class="resume-entry"><time>${escapeHTML(entry.period)}</time><div><strong>${escapeHTML(text(entry.title))}</strong></div></div>
+  `).join("");
+}
+
+function renderProjects() {
+  $(".projects-grid").innerHTML = content.projects.map((project, index) => `
+    <article class="project-card">
+      <div class="project-art project-${index + 1}" data-art="${escapeHTML(project.art)}" aria-hidden="true">
+        <span>${String(index + 1).padStart(2, "0")}</span>
+        <div class="project-artwork"><i></i><i></i><i></i></div>
+      </div>
+      <div class="project-copy"><small>${escapeHTML(text(project.category))} · ${escapeHTML(project.year)}</small><h3>${escapeHTML(text(project.title))}</h3></div>
+    </article>
+  `).join("");
+}
+
+function setLanguage(next) {
+  language = next;
+  renderPage();
+}
+
+function selectPlace(id) {
+  selectedPlace = id;
+  $$(".place-tabs button").forEach(button => button.classList.toggle("selected", button.dataset.place === id));
+  $$(".photo-card").forEach(card => { card.hidden = id !== "all" && card.dataset.place !== id; });
+  const place = content.places.find(item => item.id === id);
+  if (place && map) map.setOptions({ center: place.coordinates, zoom: 5 });
+  else if (id === "all" && map) map.setOptions(ASIA_OVERVIEW);
+}
+
+function openPhoto(placeId, photoIndex) {
+  const place = content.places.find(item => item.id === placeId);
+  const photo = place?.photos[photoIndex];
+  if (!place || !photo) return;
+  const dialog = $("#photoDialog");
+  const image = $(".dialog-image", dialog);
+  image.src = photo.image;
+  image.alt = text(photo.alt);
+  $(".dialog-copy small", dialog).textContent = `${text(place.name).toUpperCase()} · ${text(content.ui.photoNote)}`;
+  $(".dialog-copy h2", dialog).textContent = text(photo.title);
+  $(".dialog-copy p", dialog).textContent = text(photo.description);
+  dialog.showModal();
+}
+
+async function copyEmail() {
+  const button = $(".email-copy");
+  const feedback = $(".copy-feedback", button);
+  try {
+    await navigator.clipboard.writeText(content.profile.email);
+  } catch {
+    const temporaryInput = document.createElement("textarea");
+    temporaryInput.value = content.profile.email;
+    temporaryInput.style.position = "fixed";
+    temporaryInput.style.opacity = "0";
+    document.body.appendChild(temporaryInput);
+    temporaryInput.select();
+    document.execCommand("copy");
+    temporaryInput.remove();
+  }
+  feedback.textContent = text(content.ui.copied);
+  button.classList.add("copied");
+  button.setAttribute("aria-label", text(content.ui.copied));
+  window.clearTimeout(copyEmail.timer);
+  copyEmail.timer = window.setTimeout(() => {
+    feedback.textContent = "";
+    button.classList.remove("copied");
+    button.setAttribute("aria-label", text(content.ui.copyEmail));
+  }, 1800);
+}
+
+function updateMapLanguage() {
+  if (!map || !infoWindow) return;
+  content.places.forEach(place => {
+    const marker = place.marker;
+    if (marker) marker.setTitle(text(place.name));
+  });
+}
+
+function showMapError() {
+  const fallback = $(".map-fallback");
+  if (fallback) $("strong", fallback).textContent = text(content.ui.mapError);
+}
+
+window.initPersonalMap = function () {
+  const mapElement = $("#map");
+  map = new google.maps.Map(mapElement, {
+    center: ASIA_OVERVIEW.center,
+    zoom: ASIA_OVERVIEW.zoom,
+    isFractionalZoomEnabled: true,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
+    clickableIcons: false,
+    gestureHandling: "cooperative",
+    styles: [
+      { featureType: "poi", stylers: [{ visibility: "off" }] },
+      { featureType: "transit", stylers: [{ visibility: "off" }] },
+      { featureType: "landscape", elementType: "geometry", stylers: [{ color: "#eef0e8" }] },
+      { featureType: "water", elementType: "geometry", stylers: [{ color: "#dce9e7" }] },
+      { featureType: "road", elementType: "geometry", stylers: [{ color: "#fff" }] }
+    ]
+  });
+  $(".map-fallback")?.remove();
+  infoWindow = new google.maps.InfoWindow();
+  content.places.forEach(place => {
+    const marker = new google.maps.Marker({
+      position: place.coordinates,
+      map,
+      title: text(place.name),
+      icon: { path: google.maps.SymbolPath.CIRCLE, fillColor: "#425d4e", fillOpacity: 1, strokeColor: "#fff", strokeWeight: 3, scale: 7 }
+    });
+    place.marker = marker;
+    marker.addListener("click", () => {
+      selectPlace(place.id);
+      const contentNode = document.createElement("div");
+      contentNode.className = "map-info";
+      const title = document.createElement("b");
+      title.textContent = text(place.name);
+      const note = document.createElement("span");
+      note.textContent = place.photos.map(photo => text(photo.title)).join(" · ");
+      contentNode.append(title, document.createElement("br"), note);
+      infoWindow.setContent(contentNode);
+      infoWindow.open({ map, anchor: marker });
+    });
+  });
 };
-let language="en", map, infoWindow;
-function setLanguage(next){language=next;document.documentElement.lang=next;document.querySelectorAll("[data-i]").forEach(el=>{const value=translations[next][el.dataset.i];if(value)el.innerHTML=value});document.querySelectorAll("[data-lang]").forEach(button=>button.classList.toggle("active",button.dataset.lang===next));}
-document.querySelectorAll("[data-lang]").forEach(button=>button.addEventListener("click",()=>setLanguage(button.dataset.lang)));
-function selectPlace(id){document.querySelectorAll(".place-tabs button").forEach(button=>button.classList.toggle("selected",button.dataset.place===id));document.querySelectorAll(".photo-card").forEach(card=>{card.hidden=id!=="all"&&card.dataset.place!==id});const place=places.find(item=>item.id===id);if(place&&map)map.setOptions({center:place.coords,zoom:5});else if(id==="all"&&map)map.setOptions({center:{lat:32,lng:102},zoom:2.5});}
-document.querySelectorAll(".place-tabs button").forEach(button=>button.addEventListener("click",()=>selectPlace(button.dataset.place)));
-function openPhoto(id){const place=places.find(item=>item.id===id);if(!place)return;const dialog=document.getElementById("photoDialog");const image=dialog.querySelector(".dialog-image");image.src=place.image;image.alt=place.name+" photo";dialog.querySelector(".dialog-copy small").textContent=place.name.toUpperCase()+" · PHOTO NOTE";dialog.querySelector(".dialog-copy h2").textContent=place.title[language];dialog.querySelector(".dialog-copy p").textContent=place.desc[language];dialog.showModal();}
-document.querySelectorAll(".photo-card").forEach(card=>card.addEventListener("click",()=>openPhoto(card.dataset.photo)));
-document.querySelector(".dialog-close").addEventListener("click",()=>document.getElementById("photoDialog").close());
-document.getElementById("photoDialog").addEventListener("click",event=>{if(event.target===event.currentTarget)event.currentTarget.close()});
-function showMapError(){const fallback=document.querySelector(".map-fallback");if(!fallback)return;fallback.querySelector("strong").textContent=language==="ko"?"지도를 불러오지 못했어요. API 키 설정을 확인해 주세요.":"The map couldn't load. Check the API key settings.";}
-window.initPersonalMap=function(){map=new google.maps.Map(document.getElementById("map"),{center:{lat:32,lng:102},zoom:2.5,isFractionalZoomEnabled:true,mapTypeControl:false,streetViewControl:false,fullscreenControl:false,clickableIcons:false,gestureHandling:"cooperative",styles:[{featureType:"poi",stylers:[{visibility:"off"}]},{featureType:"transit",stylers:[{visibility:"off"}]},{featureType:"landscape",elementType:"geometry",stylers:[{color:"#eef0e8"}]},{featureType:"water",elementType:"geometry",stylers:[{color:"#dce9e7"}]},{featureType:"road",elementType:"geometry",stylers:[{color:"#fff"}]}]});document.querySelector(".map-fallback")?.remove();infoWindow=new google.maps.InfoWindow();places.forEach(place=>{const marker=new google.maps.Marker({position:place.coords,map,title:place.name,icon:{path:google.maps.SymbolPath.CIRCLE,fillColor:"#425d4e",fillOpacity:1,strokeColor:"#fff",strokeWeight:3,scale:7}});marker.addListener("click",()=>{selectPlace(place.id);const label=place.title[language];infoWindow.setContent(`<div style="font:12px system-ui;padding:4px;color:#294b3e"><b>${place.name}</b><br>${label}</div>`);infoWindow.open({map,anchor:marker});});});};
-if(GOOGLE_MAPS_API_KEY){const script=document.createElement("script");script.src="https://maps.googleapis.com/maps/api/js?key="+encodeURIComponent(GOOGLE_MAPS_API_KEY)+"&callback=initPersonalMap&loading=async";script.async=true;script.onerror=showMapError;document.head.appendChild(script);}setLanguage("en");
+
+function loadGoogleMaps() {
+  if (!GOOGLE_MAPS_API_KEY) return;
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(GOOGLE_MAPS_API_KEY)}&callback=initPersonalMap&loading=async`;
+  script.async = true;
+  script.onerror = showMapError;
+  document.head.appendChild(script);
+}
+
+async function start() {
+  try {
+    const response = await fetch("./content.json");
+    if (!response.ok) throw new Error("Content file could not be loaded.");
+    content = await response.json();
+    renderPage();
+    $$("[data-lang]").forEach(button => button.addEventListener("click", () => setLanguage(button.dataset.lang)));
+    $(".email-copy").addEventListener("click", copyEmail);
+    $(".dialog-close").addEventListener("click", () => $("#photoDialog").close());
+    $("#photoDialog").addEventListener("click", event => { if (event.target === event.currentTarget) event.currentTarget.close(); });
+    loadGoogleMaps();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+start();
