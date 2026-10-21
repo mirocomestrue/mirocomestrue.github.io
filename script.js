@@ -4,7 +4,8 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHTML = (value = "") => String(value).replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 let content;
-let language = "en";
+const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
+let language = requestedLanguage === "ko" ? "ko" : "en";
 let selectedPlace = "all";
 let map;
 let infoWindow;
@@ -105,8 +106,10 @@ function renderProjects() {
 }
 
 function setLanguage(next) {
-  language = next;
-  renderPage();
+  if (next === language) return;
+  const nextUrl = new URL(window.location.href);
+  nextUrl.searchParams.set("lang", next);
+  window.location.assign(nextUrl.toString());
 }
 
 function selectPlace(id) {
@@ -218,7 +221,7 @@ window.initPersonalMap = function () {
 function loadGoogleMaps() {
   if (!GOOGLE_MAPS_API_KEY) return;
   const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(GOOGLE_MAPS_API_KEY)}&callback=initPersonalMap&loading=async`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(GOOGLE_MAPS_API_KEY)}&language=${encodeURIComponent(language)}&callback=initPersonalMap&loading=async`;
   script.async = true;
   script.onerror = showMapError;
   document.head.appendChild(script);
