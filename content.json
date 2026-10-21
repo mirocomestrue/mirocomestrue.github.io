@@ -1,25 +1,26 @@
 {
   "ui": {
-    "siteDescription": "Yeji Park's personal page.",
+    "siteDescription": "Yeji Park's personal website.",
     "verifiedLabel": "Verified profile",
     "copyEmail": "Copy email address",
     "copied": "Copied",
     "findMe": "FIND ME",
     "galleryTitle": "Me & the World",
-    "mapLabel": "Map showing photo locations",
+    "mapLabel": "Map of photo locations",
     "mapLoading": "Loading map",
-    "mapError": "The map couldn't load. Check the API key settings.",
-    "photoNote": "PHOTO NOTE",
+    "mapError": "Map unavailable. Check the API key settings.",
+    "photoNote": "CAPTION",
     "bio": "Bio",
     "projects": "Projects",
     "close": "Close",
     "previousProject": "Previous project",
     "nextProject": "Next project",
-    "country": "Korea"
+    "country": "Korea",
+    "siteTitle": "A Restless Soul in Seoul"
   },
   "profile": {
     "name": "Yeji Park",
-    "bio": "Backend engineer in Seoul.",
+    "bio": "A Restless Soul in Seoul.\nLooking for peace and simplicity!",
     "photo": "./assets/profile.jpeg",
     "email": "yeji9784@gmail.com",
     "whatsapp": "+82 10-6647-5704",
@@ -51,8 +52,8 @@
       },
       "photos": [
         {
-          "title": "The Taj Mahal at sunset",
-          "description": "As the sun set in Agra, I painted the Taj Mahal on a wall at Friends Guest House.",
+          "title": "Painting the Taj Mahal at sunset",
+          "description": "I painted the Taj Mahal on a wall at Friends Guest House.",
           "alt": "Painting of the Taj Mahal on a guesthouse wall at sunset",
           "image": "./assets/me_world/agra.jpg"
         }
@@ -68,14 +69,14 @@
       "photos": [
         {
           "title": "A warmer coat for a puppy",
-          "description": "We turned recycled socks into a little sweater to help a cold puppy stay warm.",
+          "description": "We made a sweater from recycled socks to keep a cold puppy warm.",
           "alt": "A small puppy wearing a handmade sweater from recycled socks",
           "image": "./assets/me_world/kyrg_dog.jpg"
         },
         {
           "title": "An English lesson in Karakol",
-          "description": "Sharing an English lesson with local students, with a little practice on adjectives.",
-          "alt": "An English class with an adjectives lesson written on the board",
+          "description": "Teaching English and adjectives to local students.",
+          "alt": "An English class with adjectives on the board",
           "image": "./assets/me_world/kyrg_class.jpg"
         }
       ]
@@ -89,27 +90,27 @@
       },
       "photos": [
         {
-          "title": "A picture of Mongolian traditions",
-          "description": "Drawing together with one of the older children, inspired by traditional Mongolian culture.",
-          "alt": "A drawing inspired by Mongolian culture made with a child at Lotus",
+          "title": "Drawing Mongolian traditions",
+          "description": "Drawing with one of the older children at Lotus.",
+          "alt": "A drawing inspired by Mongolian traditions at Lotus Children's Centre",
           "image": "./assets/me_world/homestay_Ulaanbaatar.JPG"
         },
         {
           "title": "My sisters at Lotus",
-          "description": "A favorite moment with my sisters at Lotus Children’s Centre.",
+          "description": "A moment with my sisters at Lotus Children's Centre.",
           "alt": "Yeji with her sisters at Lotus Children’s Centre",
           "image": "./assets/me_world/lotus_sisters.JPG"
         },
         {
           "title": "Making something sweet",
-          "description": "Rolling and preparing treats together in the Lotus kitchen.",
+          "description": "Baking together in the Lotus kitchen.",
           "alt": "Preparing baked treats together at Lotus Children’s Centre",
           "image": "./assets/me_world/Lotus_Cafe_baking.JPG"
         },
         {
           "title": "Treats from our baking day",
-          "description": "The finished treats from a baking session at Lotus Children’s Centre.",
-          "alt": "Baked treats displayed at the Lotus cafe",
+          "description": "The treats we made at Lotus Children's Centre.",
+          "alt": "Baked treats from a day at the Lotus cafe",
           "image": "./assets/me_world/Lotus_Cafe_baking2.JPG"
         }
       ]
@@ -124,13 +125,13 @@
       "photos": [
         {
           "title": "Friends at school",
-          "description": "A quiet moment with the boys and a friendly dog at Aung Myae Oo Monastic School.",
+          "description": "Students and a friendly dog at Aung Myae Oo Monastic School.",
           "alt": "Children and a dog at Aung Myae Oo Monastic School",
           "image": "./assets/me_world/sagain.jpg"
         },
         {
           "title": "Yeji in Burmese",
-          "description": "My name written in Burmese during a visit to the school.",
+          "description": "My name written in Burmese at the school.",
           "alt": "The name Yeji written in Burmese on a classroom board",
           "image": "./assets/me_world/sagaing.jpg"
         }
@@ -146,15 +147,31 @@
       "photos": [
         {
           "title": "Painting class in Osakarovka",
-          "description": "Painting with children in Osakarovka, Qaraghandy.",
+          "description": "Painting with children in Osakarovka.",
           "alt": "A painting activity with children in Osakarovka, Kazakhstan",
           "image": "./assets/me_world/kaz_children.jpg"
         },
         {
-          "title": "Working together on a home",
-          "description": "A moment from a community home renovation near Osakarovka.",
-          "alt": "A group working together on a home renovation in Qaraghandy",
+          "title": "Helping renovate a home",
+          "description": "Renovating a community home near Osakarovka.",
+          "alt": "A group renovating a home in Qaraghandy",
           "image": "./assets/me_world/kaz.jpg"
+        }
+      ]
+    },
+    {
+      "id": "pangyo",
+      "name": "Pangyo Station · Seongnam, South Korea",
+      "coordinates": {
+        "lat": 37.394762,
+        "lng": 127.111137
+      },
+      "photos": [
+        {
+          "title": "restless soul in seoul",
+          "description": "just a peaceful soul in seoul🐱",
+          "alt": "Miro standing on a bed and looking toward the camera",
+          "image": "./assets/me_world/miro.jpeg"
         }
       ]
     }
@@ -166,25 +183,25 @@
     },
     {
       "period": "2021 — Present",
-      "title": "Kakao Corp. · Ad Recommendation System Backend"
+      "title": "Kakao · Backend Engineer, Ad Recommendations"
     }
   ],
   "projects": [
     {
       "category": "FERTILITY CARE",
       "title": "For Every Kind of Mother",
-      "subtitle": "Fertility Hospital App",
-      "description": "Many fertility clinics in South Korea turn away single and unmarried women. We built a shared database of clinic visit records and a website to help women find accepting providers and seek fertility care with greater confidence.",
-      "quote": "“Some doctors will see you, while others may not. If one turns you away, I recommend asking for a different doctor.”",
+      "subtitle": "Fertility Care App",
+      "description": "Many fertility clinics in South Korea turn away unmarried women. We built a shared database of clinic visit records and a website to help them find clinics willing to treat them.",
+      "quote": "“Some doctors may see you, while others may not. If one turns you away, try another doctor.”",
       "layout": "stack",
       "images": [
         {
           "src": "./assets/projects/fertility_hospital_app.png",
-          "alt": "Fertility clinic finder showing search results and a map"
+          "alt": "Fertility clinic finder with search results and a map"
         },
         {
           "src": "./assets/projects/fertility_2.png",
-          "alt": "Clinic detail screen with availability information and reviews"
+          "alt": "Clinic details with availability and reviews"
         }
       ]
     },
@@ -192,12 +209,12 @@
       "category": "ANIMAL WELFARE",
       "title": "Adopt, Don’t Shop",
       "subtitle": "Paw in Hand · Real-time Chat",
-      "description": "Through Paw in Hand, more than 20,000 abandoned animals find families each year. My teammates and I added real-time chat to make adoption conversations easier, shaping the feature around the needs and challenges shared by Paw in Hand staff, shelter teams, and adopters.",
+      "description": "Paw in Hand helps more than 20,000 abandoned animals find homes each year. My team added real-time chat, shaped by feedback from staff, shelters, and adopters.",
       "layout": "single",
       "images": [
         {
           "src": "./assets/projects/paw_in_hand.png",
-          "alt": "Paw in Hand animal adoption management dashboard"
+          "alt": "Paw in Hand adoption dashboard"
         }
       ]
     },
@@ -205,12 +222,12 @@
       "category": "NONPROFIT TOOLS",
       "title": "A Chatbot for Nonprofits",
       "subtitle": "In development · Gyeongmyodang pilot",
-      "description": "Nonprofits often work with limited staff, even though many day-to-day tasks can be automated. We’re exploring a solution shaped by each organization’s needs and challenges. A pilot with Korea-based Gyeongmyodang is streamlining volunteer sign-ups, cancellations, and roster management that were previously handled by hand.",
+      "description": "Nonprofits often run with limited staff, and many routine tasks can be automated. We’re building a chatbot around each organization’s needs. A pilot at Gyeongmyodang automates volunteer sign-ups, cancellations, and roster management.",
       "layout": "portrait",
       "images": [
         {
           "src": "./assets/projects/mango_dev.PNG",
-          "alt": "Mango Dev KakaoTalk volunteer shift sign-up conversation"
+          "alt": "Volunteer sign-up chat for Mango Dev on KakaoTalk"
         }
       ]
     }

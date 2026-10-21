@@ -8,10 +8,11 @@ let map;
 let projectIndex = 0;
 let dialogPlaceId = "";
 let dialogPhotoIndex = 0;
+let revealObserver = null;
 
 function renderPage() {
   document.documentElement.lang = "en";
-  document.title = content.profile.name;
+  document.title = content.ui.siteTitle;
   $("meta[name='description']").content = content.ui.siteDescription;
 
   const profileImage = $(".avatar");
@@ -95,6 +96,7 @@ function showProject(index, direction = 1) {
       '<div class="project-copy"><small>' + escapeHTML(project.category) + '</small>' + subtitle +
       '<h3>' + escapeHTML(project.title) + '</h3><p>' + escapeHTML(project.description) + '</p>' + quote + '</div>' +
     '</article>';
+  observeProjectReveal();
 }
 
 function openPhoto(placeId, photoIndex) {
@@ -173,22 +175,35 @@ async function copyEmail() {
   }, 1800);
 }
 
+function observeReveal(element, delay = 0, variant = "rise") {
+  if (!revealObserver || !element) return;
+  element.classList.add("scroll-reveal", "scroll-reveal--" + variant);
+  element.style.setProperty("--reveal-delay", delay + "ms");
+  revealObserver.observe(element);
+}
+
+function observeProjectReveal() {
+  if (!revealObserver) return;
+  const isMobile = window.matchMedia("(max-width: 520px)").matches;
+  observeReveal($(".project-banner"), 0, "image");
+  observeReveal($(".project-copy"), isMobile ? 80 : 140);
+}
+
 function setupScrollReveal() {
-  const sections = $$(".content-section");
   if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  const observer = new IntersectionObserver(entries => {
+  revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add("is-visible");
-      observer.unobserve(entry.target);
+      revealObserver.unobserve(entry.target);
     });
-  }, { threshold: 0.08, rootMargin: "0px 0px -48px 0px" });
+  }, { threshold: 0.08, rootMargin: "0px 0px -44px 0px" });
 
-  sections.forEach(section => {
-    section.classList.add("scroll-reveal");
-    observer.observe(section);
-  });
+  const isMobile = window.matchMedia("(max-width: 520px)").matches;
+  $$(".section-heading").forEach(heading => observeReveal(heading));
+  $$(".bio-entry").forEach((entry, index) => observeReveal(entry, index * (isMobile ? 65 : 100)));
+  observeProjectReveal();
 }
 
 function showMapError() {
@@ -216,9 +231,10 @@ window.initPersonalMap = function () {
   $(".map-fallback")?.remove();
 
   class PhotoPreviewOverlay extends google.maps.OverlayView {
-    constructor(place) {
+    constructor(place, index) {
       super();
       this.place = place;
+      this.index = index;
       this.position = new google.maps.LatLng(place.coordinates);
       this.setMap(map);
     }
@@ -249,6 +265,8 @@ window.initPersonalMap = function () {
       });
       this.element = marker;
       this.getPanes().overlayMouseTarget.appendChild(marker);
+      const pinDelay = window.matchMedia("(max-width: 520px)").matches ? 60 : 90;
+      observeReveal(marker, this.index * pinDelay, "pin");
     }
 
     draw() {
@@ -264,7 +282,7 @@ window.initPersonalMap = function () {
     }
   }
 
-  content.places.forEach(place => new PhotoPreviewOverlay(place));
+  content.places.forEach((place, index) => new PhotoPreviewOverlay(place, index));
   if (content.places.length > 1) {
     const bounds = new google.maps.LatLngBounds();
     content.places.forEach(place => bounds.extend(place.coordinates));
