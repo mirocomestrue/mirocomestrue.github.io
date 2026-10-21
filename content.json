@@ -1,97 +1,28 @@
 {
   "ui": {
-    "siteDescription": {
-      "en": "A little introduction to Yeji Park.",
-      "ko": "예지 박을 소개하는 작은 페이지입니다."
-    },
-    "verifiedLabel": {
-      "en": "Verified profile",
-      "ko": "인증된 프로필"
-    },
-    "copyEmail": {
-      "en": "Copy email address",
-      "ko": "이메일 주소 복사"
-    },
-    "copied": {
-      "en": "Copied!",
-      "ko": "복사했어요!"
-    },
-    "findMe": {
-      "en": "FIND ME",
-      "ko": "FIND ME"
-    },
-    "catSection": {
-      "en": "Miro",
-      "ko": "미로"
-    },
-    "galleryTitle": {
-      "en": "Places",
-      "ko": "장소"
-    },
-    "mapLabel": {
-      "en": "Map showing photo locations",
-      "ko": "사진 촬영 장소 지도"
-    },
-    "mapLoading": {
-      "en": "Loading map",
-      "ko": "지도를 불러오는 중"
-    },
-    "mapError": {
-      "en": "The map couldn't load. Check the API key settings.",
-      "ko": "지도를 불러오지 못했어요. API 키 설정을 확인해 주세요."
-    },
-    "photoHeading": {
-      "en": "Photos",
-      "ko": "사진"
-    },
-    "allPlaces": {
-      "en": "All",
-      "ko": "전체"
-    },
-    "photoNote": {
-      "en": "PHOTO NOTE",
-      "ko": "사진 기록"
-    },
-    "experienceEducation": {
-      "en": "Experience & Education",
-      "ko": "경력과 학력"
-    },
-    "experience": {
-      "en": "Experience",
-      "ko": "경력"
-    },
-    "education": {
-      "en": "Education",
-      "ko": "학력"
-    },
-    "projects": {
-      "en": "Projects",
-      "ko": "프로젝트"
-    },
-    "close": {
-      "en": "Close",
-      "ko": "닫기"
-    },
-    "languageSelection": {
-      "en": "Language",
-      "ko": "언어"
-    },
-    "country": {
-      "en": "Korea",
-      "ko": "한국"
-    }
+    "siteDescription": "Yeji Park's personal page.",
+    "verifiedLabel": "Verified profile",
+    "copyEmail": "Copy email address",
+    "copied": "Copied",
+    "findMe": "FIND ME",
+    "galleryTitle": "Places",
+    "mapLabel": "Map showing photo locations",
+    "mapLoading": "Loading map",
+    "mapError": "The map couldn't load. Check the API key settings.",
+    "photoNote": "PHOTO NOTE",
+    "bio": "Bio",
+    "projects": "Projects",
+    "close": "Close",
+    "previousProject": "Previous project",
+    "nextProject": "Next project",
+    "country": "Korea"
   },
   "profile": {
-    "name": {
-      "en": "Yeji Park",
-      "ko": "Yeji Park"
-    },
-    "bio": {
-      "en": "Creative planner in Seoul.",
-      "ko": "서울에서 디지털 경험을 기획합니다."
-    },
+    "name": "Yeji Park",
+    "bio": "Backend engineer in Seoul.",
     "photo": "./assets/profile.jpeg",
     "email": "yeji9784@gmail.com",
+    "whatsapp": "+82 10-6647-5704",
     "socials": [
       {
         "name": "Instagram",
@@ -110,25 +41,10 @@
       }
     ]
   },
-  "cat": {
-    "name": {
-      "en": "Miro",
-      "ko": "미로"
-    },
-    "description": {
-      "en": "Cat videos",
-      "ko": "미로의 유튜브 영상"
-    },
-    "photo": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=600&q=80",
-    "videoUrl": "https://youtube.com/"
-  },
   "places": [
     {
       "id": "seoul",
-      "name": {
-        "en": "Seoul",
-        "ko": "서울"
-      },
+      "name": "Seoul",
       "coordinates": {
         "lat": 37.5665,
         "lng": 126.978
@@ -136,28 +52,16 @@
       "photos": [
         {
           "date": "09:18",
-          "title": {
-            "en": "A slow morning walk",
-            "ko": "느린 아침 산책"
-          },
-          "description": {
-            "en": "I took a slow walk through the neighborhood as little shops opened for the day.",
-            "ko": "작은 가게가 문을 열던 시간, 천천히 동네를 걸으며 아침의 풍경을 담았습니다."
-          },
-          "alt": {
-            "en": "City lights at dusk",
-            "ko": "해 질 무렵의 도시 풍경"
-          },
+          "title": "A slow morning walk",
+          "description": "I took a slow walk through the neighborhood as little shops opened for the day.",
+          "alt": "City lights at dusk",
           "image": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=85"
         }
       ]
     },
     {
       "id": "jeju",
-      "name": {
-        "en": "Jeju",
-        "ko": "제주"
-      },
+      "name": "Jeju",
       "coordinates": {
         "lat": 33.4996,
         "lng": 126.5312
@@ -165,28 +69,16 @@
       "photos": [
         {
           "date": "16:42",
-          "title": {
-            "en": "Following the wind",
-            "ko": "바람을 따라 걷기"
-          },
-          "description": {
-            "en": "I paused to watch the sea change color with every gust of wind.",
-            "ko": "바람이 불 때마다 달라지는 바다의 색을 바라보며 잠시 쉬어 갔어요."
-          },
-          "alt": {
-            "en": "Coastal landscape",
-            "ko": "바닷가 풍경"
-          },
+          "title": "Following the wind",
+          "description": "I paused to watch the sea change color with every gust of wind.",
+          "alt": "Coastal landscape",
           "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=85"
         }
       ]
     },
     {
       "id": "busan",
-      "name": {
-        "en": "Busan",
-        "ko": "부산"
-      },
+      "name": "Busan",
       "coordinates": {
         "lat": 35.1796,
         "lng": 129.0756
@@ -194,90 +86,44 @@
       "photos": [
         {
           "date": "18:05",
-          "title": {
-            "en": "Notes from a blue evening",
-            "ko": "파란 저녁의 기록"
-          },
-          "description": {
-            "en": "I remember the blue sea lingering long after the sun had set.",
-            "ko": "해가 진 뒤에도 한동안 파랗게 남아 있던 바다를 기억합니다."
-          },
-          "alt": {
-            "en": "Evening by the sea",
-            "ko": "저녁 바닷가"
-          },
+          "title": "Notes from a blue evening",
+          "description": "I remember the blue sea lingering long after the sun had set.",
+          "alt": "Evening by the sea",
           "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85"
         }
       ]
     }
   ],
-  "experience": [
-    {
-      "period": "2023 — NOW",
-      "title": {
-        "en": "Brand Studio · Planning",
-        "ko": "브랜드 스튜디오 · 기획"
-      }
-    },
-    {
-      "period": "2021 — 2023",
-      "title": {
-        "en": "Good Team · Project Manager",
-        "ko": "좋은 팀 · 프로젝트 매니저"
-      }
-    }
-  ],
-  "education": [
+  "bio": [
     {
       "period": "2017 — 2021",
-      "title": {
-        "en": "Seoul National University · Communications",
-        "ko": "서울대학교 · 커뮤니케이션"
-      }
+      "title": "Yonsei University · Computer Science"
     },
     {
-      "period": "2020",
-      "title": {
-        "en": "Exchange program",
-        "ko": "교환학생 프로그램"
-      }
+      "period": "2021 — Present",
+      "title": "Kakao Corp. · Ad Recommendation System Backend"
     }
   ],
   "projects": [
     {
-      "category": {
-        "en": "PRODUCT",
-        "ko": "제품"
-      },
+      "category": "PRODUCT",
       "year": "2025",
-      "title": {
-        "en": "A calmer first step",
-        "ko": "마음이 편한 시작"
-      },
+      "title": "A calmer first step",
+      "description": "A small product idea designed to make getting started feel easier.",
       "art": "window"
     },
     {
-      "category": {
-        "en": "COMMUNITY",
-        "ko": "커뮤니티"
-      },
+      "category": "COMMUNITY",
       "year": "2024",
-      "title": {
-        "en": "A new neighborhood connection",
-        "ko": "동네의 새로운 연결"
-      },
+      "title": "A new neighborhood connection",
+      "description": "A community concept for helping people feel at home in a new place.",
       "art": "bubble"
     },
     {
-      "category": {
-        "en": "RESEARCH",
-        "ko": "리서치"
-      },
+      "category": "RESEARCH",
       "year": "2024",
-      "title": {
-        "en": "The power of small observations",
-        "ko": "작은 관찰의 힘"
-      },
+      "title": "The power of small observations",
+      "description": "A short research project about the details that shape everyday life.",
       "art": "paper"
     }
   ]

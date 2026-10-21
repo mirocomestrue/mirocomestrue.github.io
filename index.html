@@ -4,27 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="">
-  <title></title>
+  <meta name="description" content="Yeji Park's personal page.">
+  <title>Yeji Park</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=7">
-  <script defer src="./script.js?v=7"></script>
+  <link rel="stylesheet" href="./styles.css?v=8">
+  <script defer src="./script.js?v=8"></script>
 </head>
 <body>
   <main class="site-frame" id="top">
     <header class="profile">
-      <div class="cover">
-        <div class="cover-orb orb-one"></div>
-        <div class="cover-orb orb-two"></div>
-        <div class="cover-orb orb-three"></div>
-        <div class="language" aria-label="Language">
-          <button class="active" data-lang="en" aria-label="English">EN</button>
-          <span aria-hidden="true">|</span>
-          <button data-lang="ko" aria-label="한국어">KR</button>
-        </div>
-      </div>
+      <div class="cover" aria-hidden="true"></div>
       <div class="avatar-wrap">
         <img class="avatar" src="" alt="">
         <span class="verified-badge" aria-label="">
@@ -35,9 +26,16 @@
         <h1></h1>
         <p class="bio"></p>
         <div class="primary-links">
+          <a class="primary-link whatsapp-link" target="_blank" rel="noopener noreferrer">
+            <svg class="whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.2 11.6a8.5 8.5 0 0 1-12.5 7.5L4 20l1-3.5a8.5 8.5 0 1 1 15.2-4.9Z"></path>
+              <path d="M8.6 8.1c.2-.5.5-.5.8-.5h.5c.2 0 .4 0 .5.4l.7 1.6c.1.3.1.5-.1.7l-.5.6c-.2.2-.2.4-.1.6.4.8 1.1 1.5 2 2 .2.1.4.1.6-.1l.7-.8c.2-.2.4-.3.7-.2l1.5.7c.3.1.4.3.4.6 0 .4-.2 1.2-.7 1.5-.5.4-1.1.6-1.8.4-1.2-.3-2.6-1.1-3.8-2.2-1-.9-1.8-2.1-2.1-3.1-.3-.9 0-1.7.4-2.2Z"></path>
+            </svg>
+            <span class="whatsapp-number"></span>
+          </a>
           <button class="primary-link email-copy" type="button">
+            <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5.5" y="5" width="13" height="16" rx="1.5"></rect><path d="M9 5V3h6v2M9 10h6M9 14h6"></path></svg>
             <span class="email-address"></span>
-            <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
             <span class="copy-feedback" aria-live="polite"></span>
           </button>
         </div>
@@ -48,49 +46,36 @@
       </div>
     </header>
 
-    <section class="miro-section section-pad" aria-labelledby="cat-name">
-      <a class="miro-card" target="_blank" rel="noreferrer">
-        <img src="" alt="" loading="lazy">
-        <span class="miro-copy"><strong id="cat-name"></strong><span></span></span>
-        <span class="play-button" aria-hidden="true">▶</span>
-      </a>
+    <section class="content-section section-pad" id="places">
+      <div class="section-heading"><h2></h2></div>
+      <div id="map" aria-label="">
+        <div class="map-fallback"><b aria-hidden="true">⌖</b><strong></strong></div>
+      </div>
     </section>
 
-    <section class="content-section section-pad" id="gallery">
+    <section class="content-section section-pad" id="bio">
       <div class="section-heading"><h2></h2></div>
-      <div class="map-card">
-        <div id="map" aria-label="">
-          <div class="map-fallback"><b>⌖</b><strong></strong></div>
-        </div>
-      </div>
-      <div class="photo-heading"><h3></h3></div>
-      <div class="place-tabs" role="group"></div>
-      <div class="photos"></div>
-    </section>
-
-    <section class="content-section section-pad" id="life">
-      <div class="section-heading"><h2></h2></div>
-      <div class="resume-grid">
-        <article class="resume-card experience-card">
-          <div class="card-heading"><span>↗</span><h3></h3></div>
-          <div class="resume-entries"></div>
-        </article>
-        <article class="resume-card education-card">
-          <div class="card-heading"><span>✳</span><h3></h3></div>
-          <div class="resume-entries"></div>
-        </article>
-      </div>
+      <div class="bio-entries"></div>
     </section>
 
     <section class="content-section section-pad projects-section" id="projects">
-      <div class="section-heading"><h2></h2></div>
-      <div class="projects-grid"></div>
+      <div class="section-heading project-heading">
+        <h2></h2>
+        <div class="project-controls">
+          <button class="carousel-arrow project-prev" type="button" aria-label="Previous project">‹</button>
+          <span class="project-count" aria-live="polite"></span>
+          <button class="carousel-arrow project-next" type="button" aria-label="Next project">›</button>
+        </div>
+      </div>
+      <div class="project-slide" aria-live="polite"></div>
     </section>
   </main>
 
   <dialog id="photoDialog" class="photo-dialog">
-    <button class="dialog-close" type="button"></button>
+    <button class="dialog-close" type="button" aria-label="Close">×</button>
     <img class="dialog-image" src="" alt="">
+    <button class="dialog-photo-arrow dialog-photo-prev" type="button" aria-label="Previous photo">‹</button>
+    <button class="dialog-photo-arrow dialog-photo-next" type="button" aria-label="Next photo">›</button>
     <div class="dialog-copy"><small></small><h2></h2><p></p></div>
   </dialog>
 </body>

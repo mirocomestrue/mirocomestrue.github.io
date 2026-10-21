@@ -1,138 +1,119 @@
 const GOOGLE_MAPS_API_KEY = "AIzaSyD9VuXNbVvifzE7MCd-x7GIM1OWtskXT8g";
-const ASIA_OVERVIEW = { center: { lat: 32, lng: 102 }, zoom: 2.5 };
+const MAP_CAMERA = { center: { lat: 36, lng: 127.7 }, zoom: 6 };
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHTML = (value = "") => String(value).replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 let content;
-const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
-let language = requestedLanguage === "ko" ? "ko" : "en";
-let selectedPlace = "all";
 let map;
-let infoWindow;
-
-function text(value) {
-  return typeof value === "string" ? value : (value?.[language] ?? value?.en ?? "");
-}
+let projectIndex = 0;
+let dialogPlaceId = "";
+let dialogPhotoIndex = 0;
 
 function renderPage() {
-  document.documentElement.lang = language;
-  document.title = text(content.profile.name);
-  $("meta[name='description']").content = text(content.ui.siteDescription);
+  document.documentElement.lang = "en";
+  document.title = content.profile.name;
+  $("meta[name='description']").content = content.ui.siteDescription;
 
   const profileImage = $(".avatar");
   profileImage.src = content.profile.photo;
-  profileImage.alt = text(content.profile.name);
-  $(".verified-badge").setAttribute("aria-label", text(content.ui.verifiedLabel));
-  $(".language").setAttribute("aria-label", text(content.ui.languageSelection));
-  $(".profile-content h1").textContent = text(content.profile.name);
-  $(".bio").textContent = text(content.profile.bio);
+  profileImage.alt = content.profile.name;
+  $(".verified-badge").setAttribute("aria-label", content.ui.verifiedLabel);
+  $(".profile-content h1").textContent = content.profile.name;
+  $(".bio").textContent = content.profile.bio;
+
+  const whatsapp = $(".whatsapp-link");
+  whatsapp.href = "https://wa.me/" + content.profile.whatsapp.replace(/\D/g, "");
+  whatsapp.setAttribute("aria-label", "Message on WhatsApp: " + content.profile.whatsapp);
+  $(".whatsapp-number", whatsapp).textContent = "WhatsApp · " + content.profile.whatsapp;
+
   const emailButton = $(".email-copy");
-  emailButton.setAttribute("aria-label", text(content.ui.copyEmail));
+  emailButton.setAttribute("aria-label", content.ui.copyEmail);
   $(".email-address", emailButton).textContent = content.profile.email;
-  $(".find-me .eyebrow").textContent = text(content.ui.findMe);
-  $(".social-links").innerHTML = content.profile.socials.map(social => `
-    <a href="${escapeHTML(social.url)}" target="_blank" rel="noreferrer"><span>${escapeHTML(social.icon)}</span> ${escapeHTML(social.name)}</a>
-  `).join("");
+  $(".find-me .eyebrow").textContent = content.ui.findMe;
+  $(".social-links").innerHTML = content.profile.socials.map(social =>
+    '<a href="' + escapeHTML(social.url) + '" target="_blank" rel="noopener noreferrer"><span>' + escapeHTML(social.icon) + '</span> ' + escapeHTML(social.name) + '</a>'
+  ).join("");
 
-  const cat = content.cat;
-  const catCard = $(".miro-card");
-  catCard.href = cat.videoUrl;
-  catCard.setAttribute("aria-label", `${text(cat.name)} · ${text(cat.description)}`);
-  $(".miro-card img").src = cat.photo;
-  $(".miro-card img").alt = text(cat.name);
-  $("#cat-name").textContent = text(cat.name);
-  $(".miro-copy > span").textContent = text(cat.description);
-
-  $("#gallery .section-heading h2").textContent = text(content.ui.galleryTitle);
-  $("#map").setAttribute("aria-label", text(content.ui.mapLabel));
+  $("#places .section-heading h2").textContent = content.ui.galleryTitle;
+  $("#map").setAttribute("aria-label", content.ui.mapLabel);
   const mapLoadingLabel = $(".map-fallback strong");
-  if (mapLoadingLabel) mapLoadingLabel.textContent = text(content.ui.mapLoading);
-  $(".photo-heading h3").textContent = text(content.ui.photoHeading);
-  renderPlaceFilters();
-  renderPhotos();
+  if (mapLoadingLabel) mapLoadingLabel.textContent = content.ui.mapLoading;
 
-  $("#life .section-heading h2").textContent = text(content.ui.experienceEducation);
-  renderResume(".experience-card", content.ui.experience, content.experience);
-  renderResume(".education-card", content.ui.education, content.education);
-  $(".projects-section .section-heading h2").textContent = text(content.ui.projects);
+  $("#bio .section-heading h2").textContent = content.ui.bio;
+  renderBio();
   renderProjects();
 
-  $$("[data-lang]").forEach(button => button.classList.toggle("active", button.dataset.lang === language));
-  $(".dialog-close").textContent = "×";
-  $(".dialog-close").setAttribute("aria-label", text(content.ui.close));
-  if (map) updateMapLanguage();
-}
-
-function renderPlaceFilters() {
-  const filters = [{ id: "all", name: content.ui.allPlaces }, ...content.places.map(place => ({ id: place.id, name: place.name }))];
-  $(".place-tabs").innerHTML = filters.map(filter => `
-    <button type="button" data-place="${escapeHTML(filter.id)}" class="${filter.id === selectedPlace ? "selected" : ""}">${escapeHTML(text(filter.name))}</button>
-  `).join("");
-  $$(".place-tabs button").forEach(button => button.addEventListener("click", () => selectPlace(button.dataset.place)));
-}
-
-function renderPhotos() {
-  const cards = content.places.flatMap(place => place.photos.map((photo, index) => ({ place, photo, index })));
-  $(".photos").innerHTML = cards.map(({ place, photo, index }) => `
-    <button type="button" class="photo-card" data-place="${escapeHTML(place.id)}" data-photo-index="${index}">
-      <span class="photo-image"><img src="${escapeHTML(photo.image)}" alt="${escapeHTML(text(photo.alt))}" loading="lazy"><small>${escapeHTML(text(place.name).toUpperCase())} · ${escapeHTML(photo.date)}</small></span>
-      <span class="photo-caption"><strong>${escapeHTML(text(photo.title))}</strong><small>${escapeHTML(text(place.name))}, ${escapeHTML(text(content.ui.country))}<b>↗</b></small></span>
-    </button>
-  `).join("");
-  $$(".photo-card").forEach(card => {
-    card.hidden = selectedPlace !== "all" && card.dataset.place !== selectedPlace;
-    card.addEventListener("click", () => openPhoto(card.dataset.place, Number(card.dataset.photoIndex)));
+  $(".dialog-close").setAttribute("aria-label", content.ui.close);
+  $(".email-copy").addEventListener("click", copyEmail);
+  $(".dialog-close").addEventListener("click", () => $("#photoDialog").close());
+  $(".dialog-photo-prev").addEventListener("click", () => moveDialogPhoto(-1));
+  $(".dialog-photo-next").addEventListener("click", () => moveDialogPhoto(1));
+  $("#photoDialog").addEventListener("click", event => {
+    if (event.target === event.currentTarget) event.currentTarget.close();
   });
 }
 
-function renderResume(selector, heading, entries) {
-  const card = $(selector);
-  $(".card-heading h3", card).textContent = text(heading);
-  $(".resume-entries", card).innerHTML = entries.map(entry => `
-    <div class="resume-entry"><time>${escapeHTML(entry.period)}</time><div><strong>${escapeHTML(text(entry.title))}</strong></div></div>
-  `).join("");
+function renderBio() {
+  $(".bio-entries").innerHTML = content.bio.map(entry =>
+    '<div class="bio-entry"><time>' + escapeHTML(entry.period) + '</time><strong>' + escapeHTML(entry.title) + '</strong></div>'
+  ).join("");
 }
 
 function renderProjects() {
-  $(".projects-grid").innerHTML = content.projects.map((project, index) => `
-    <article class="project-card">
-      <div class="project-art project-${index + 1}" data-art="${escapeHTML(project.art)}" aria-hidden="true">
-        <span>${String(index + 1).padStart(2, "0")}</span>
-        <div class="project-artwork"><i></i><i></i><i></i></div>
-      </div>
-      <div class="project-copy"><small>${escapeHTML(text(project.category))} · ${escapeHTML(project.year)}</small><h3>${escapeHTML(text(project.title))}</h3></div>
-    </article>
-  `).join("");
+  $("#projects .section-heading h2").textContent = content.ui.projects;
+  $(".project-prev").setAttribute("aria-label", content.ui.previousProject);
+  $(".project-next").setAttribute("aria-label", content.ui.nextProject);
+  $(".project-prev").addEventListener("click", () => showProject(projectIndex - 1));
+  $(".project-next").addEventListener("click", () => showProject(projectIndex + 1));
+  showProject(0);
 }
 
-function setLanguage(next) {
-  if (next === language) return;
-  const nextUrl = new URL(window.location.href);
-  nextUrl.searchParams.set("lang", next);
-  window.location.assign(nextUrl.toString());
-}
-
-function selectPlace(id) {
-  selectedPlace = id;
-  $$(".place-tabs button").forEach(button => button.classList.toggle("selected", button.dataset.place === id));
-  $$(".photo-card").forEach(card => { card.hidden = id !== "all" && card.dataset.place !== id; });
-  const place = content.places.find(item => item.id === id);
-  if (place && map) map.setOptions({ center: place.coordinates, zoom: 5 });
-  else if (id === "all" && map) map.setOptions(ASIA_OVERVIEW);
+function showProject(index) {
+  projectIndex = (index + content.projects.length) % content.projects.length;
+  const project = content.projects[projectIndex];
+  const number = String(projectIndex + 1).padStart(2, "0");
+  $(".project-count").textContent = number + " / " + String(content.projects.length).padStart(2, "0");
+  $(".project-slide").innerHTML =
+    '<article class="project-card">' +
+      '<div class="project-banner project-' + (projectIndex + 1) + '" data-art="' + escapeHTML(project.art) + '" aria-hidden="true">' +
+        '<span class="project-number">' + number + '</span>' +
+        '<div class="project-artwork"><i></i><i></i><i></i></div>' +
+      '</div>' +
+      '<div class="project-copy"><small>' + escapeHTML(project.category) + ' · ' + escapeHTML(project.year) + '</small>' +
+      '<h3>' + escapeHTML(project.title) + '</h3><p>' + escapeHTML(project.description) + '</p></div>' +
+    '</article>';
 }
 
 function openPhoto(placeId, photoIndex) {
   const place = content.places.find(item => item.id === placeId);
-  const photo = place?.photos[photoIndex];
+  if (!place || !place.photos.length) return;
+  dialogPlaceId = placeId;
+  dialogPhotoIndex = photoIndex;
+  renderDialogPhoto();
+  $("#photoDialog").showModal();
+}
+
+function renderDialogPhoto() {
+  const place = content.places.find(item => item.id === dialogPlaceId);
+  const photo = place && place.photos[dialogPhotoIndex];
   if (!place || !photo) return;
   const dialog = $("#photoDialog");
   const image = $(".dialog-image", dialog);
   image.src = photo.image;
-  image.alt = text(photo.alt);
-  $(".dialog-copy small", dialog).textContent = `${text(place.name).toUpperCase()} · ${text(content.ui.photoNote)}`;
-  $(".dialog-copy h2", dialog).textContent = text(photo.title);
-  $(".dialog-copy p", dialog).textContent = text(photo.description);
-  dialog.showModal();
+  image.alt = photo.alt;
+  $(".dialog-copy small", dialog).textContent = place.name + " · " + content.ui.photoNote;
+  $(".dialog-copy h2", dialog).textContent = photo.title;
+  $(".dialog-copy p", dialog).textContent = photo.description;
+  const multiple = place.photos.length > 1;
+  $(".dialog-photo-prev", dialog).hidden = !multiple;
+  $(".dialog-photo-next", dialog).hidden = !multiple;
+}
+
+function moveDialogPhoto(direction) {
+  const place = content.places.find(item => item.id === dialogPlaceId);
+  if (!place || place.photos.length < 2) return;
+  dialogPhotoIndex = (dialogPhotoIndex + direction + place.photos.length) % place.photos.length;
+  renderDialogPhoto();
 }
 
 async function copyEmail() {
@@ -150,36 +131,26 @@ async function copyEmail() {
     document.execCommand("copy");
     temporaryInput.remove();
   }
-  feedback.textContent = text(content.ui.copied);
+  feedback.textContent = content.ui.copied;
   button.classList.add("copied");
-  button.setAttribute("aria-label", text(content.ui.copied));
+  button.setAttribute("aria-label", content.ui.copied);
   window.clearTimeout(copyEmail.timer);
   copyEmail.timer = window.setTimeout(() => {
     feedback.textContent = "";
     button.classList.remove("copied");
-    button.setAttribute("aria-label", text(content.ui.copyEmail));
+    button.setAttribute("aria-label", content.ui.copyEmail);
   }, 1800);
-}
-
-function updateMapLanguage() {
-  if (!map || !infoWindow) return;
-  content.places.forEach(place => {
-    const marker = place.marker;
-    if (marker) marker.setTitle(text(place.name));
-  });
 }
 
 function showMapError() {
   const fallback = $(".map-fallback");
-  if (fallback) $("strong", fallback).textContent = text(content.ui.mapError);
+  if (fallback) $("strong", fallback).textContent = content.ui.mapError;
 }
 
 window.initPersonalMap = function () {
-  const mapElement = $("#map");
-  map = new google.maps.Map(mapElement, {
-    center: ASIA_OVERVIEW.center,
-    zoom: ASIA_OVERVIEW.zoom,
-    isFractionalZoomEnabled: true,
+  map = new google.maps.Map($("#map"), {
+    center: MAP_CAMERA.center,
+    zoom: MAP_CAMERA.zoom,
     mapTypeControl: false,
     streetViewControl: false,
     fullscreenControl: false,
@@ -194,34 +165,64 @@ window.initPersonalMap = function () {
     ]
   });
   $(".map-fallback")?.remove();
-  infoWindow = new google.maps.InfoWindow();
-  content.places.forEach(place => {
-    const marker = new google.maps.Marker({
-      position: place.coordinates,
-      map,
-      title: text(place.name),
-      icon: { path: google.maps.SymbolPath.CIRCLE, fillColor: "#425d4e", fillOpacity: 1, strokeColor: "#fff", strokeWeight: 3, scale: 7 }
-    });
-    place.marker = marker;
-    marker.addListener("click", () => {
-      selectPlace(place.id);
-      const contentNode = document.createElement("div");
-      contentNode.className = "map-info";
-      const title = document.createElement("b");
-      title.textContent = text(place.name);
-      const note = document.createElement("span");
-      note.textContent = place.photos.map(photo => text(photo.title)).join(" · ");
-      contentNode.append(title, document.createElement("br"), note);
-      infoWindow.setContent(contentNode);
-      infoWindow.open({ map, anchor: marker });
-    });
-  });
+
+  class PhotoPreviewOverlay extends google.maps.OverlayView {
+    constructor(place) {
+      super();
+      this.place = place;
+      this.position = new google.maps.LatLng(place.coordinates);
+      this.setMap(map);
+    }
+
+    onAdd() {
+      const marker = document.createElement("button");
+      marker.type = "button";
+      marker.className = "map-photo-marker";
+      marker.setAttribute("aria-label", this.place.name + " photo preview");
+      marker.title = this.place.name + " · " + this.place.photos.length + " photo" + (this.place.photos.length === 1 ? "" : "s");
+
+      const image = document.createElement("img");
+      image.src = this.place.photos[0].image;
+      image.alt = this.place.photos[0].alt;
+      image.loading = "eager";
+      marker.appendChild(image);
+
+      if (this.place.photos.length > 1) {
+        const count = document.createElement("span");
+        count.className = "map-photo-count";
+        count.textContent = "+" + (this.place.photos.length - 1);
+        marker.appendChild(count);
+      }
+
+      marker.addEventListener("click", event => {
+        event.stopPropagation();
+        openPhoto(this.place.id, 0);
+      });
+      this.element = marker;
+      this.getPanes().overlayMouseTarget.appendChild(marker);
+    }
+
+    draw() {
+      const pixel = this.getProjection().fromLatLngToDivPixel(this.position);
+      if (!pixel || !this.element) return;
+      this.element.style.left = (pixel.x - this.element.offsetWidth / 2) + "px";
+      this.element.style.top = (pixel.y - this.element.offsetHeight - 15) + "px";
+    }
+
+    onRemove() {
+      this.element?.remove();
+      this.element = null;
+    }
+  }
+
+  content.places.forEach(place => new PhotoPreviewOverlay(place));
 };
 
 function loadGoogleMaps() {
   if (!GOOGLE_MAPS_API_KEY) return;
   const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(GOOGLE_MAPS_API_KEY)}&language=${encodeURIComponent(language)}&callback=initPersonalMap&loading=async`;
+  script.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(GOOGLE_MAPS_API_KEY) +
+    "&language=en&callback=initPersonalMap&loading=async";
   script.async = true;
   script.onerror = showMapError;
   document.head.appendChild(script);
@@ -229,14 +230,10 @@ function loadGoogleMaps() {
 
 async function start() {
   try {
-    const response = await fetch("./content.json");
+    const response = await fetch("./content.json?v=8", { cache: "no-store" });
     if (!response.ok) throw new Error("Content file could not be loaded.");
     content = await response.json();
     renderPage();
-    $$("[data-lang]").forEach(button => button.addEventListener("click", () => setLanguage(button.dataset.lang)));
-    $(".email-copy").addEventListener("click", copyEmail);
-    $(".dialog-close").addEventListener("click", () => $("#photoDialog").close());
-    $("#photoDialog").addEventListener("click", event => { if (event.target === event.currentTarget) event.currentTarget.close(); });
     loadGoogleMaps();
   } catch (error) {
     console.error(error);
